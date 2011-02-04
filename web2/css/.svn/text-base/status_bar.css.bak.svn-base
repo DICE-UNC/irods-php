@@ -1,0 +1,4 @@
+.z-statusbar .z-status-custom {
+    padding-left: 25px;
+    background: url(img/button/connect.png) no-repeat !important;
+}

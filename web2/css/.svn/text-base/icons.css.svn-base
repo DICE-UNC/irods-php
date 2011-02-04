@@ -1,0 +1,118 @@
+/* -----------------
+   Misc icons
+   ----------------- */  
+.z-network-add-48 { background-image: url(img/account/icon-network-add-48px.gif) !important; }  
+.z-error-treenode { background-image: url(img/common-icons/folder_bug.png) no-repeat !important; }  
+/* -----------------
+   small
+   ----------------- */  
+.z-resource_unknown-small				{ background-image: url(img/small/default.gif) !important; }
+.z-folder-small							{ background-image: url(img/small/folder.gif) !important; }
+.z-application_x-msdos-program-small	{ background-image: url(img/small/application-program.gif) !important; }
+.z-application_msword-small 			{ background-image: url(img/small/application-msword.gif) !important; }
+.z-application_rtf-small	 			{ background-image: url(img/small/application-msword.gif) !important; }
+.z-application_msword-vista-small		{ background-image: url(img/small/application-msword-vista.gif) !important; }
+.z-application_excel-small				{ background-image: url(img/small/application-excel.gif) !important; }
+.z-application_excel-vista-small		{ background-image: url(img/small/application-excel-vista.gif) !important; }
+.z-application_powerpoint-small			{ background-image: url(img/small/application-powerpoint.gif) !important; }
+.z-application_powerpoint-vista-small	{ background-image: url(img/small/application-powerpoint-vista.gif) !important; }
+.z-application_zip-small 				{ background-image: url(img/small/application-zip.gif) !important; }
+.z-application_x-javascript-small		{ background-image: url(img/small/application-js.gif) !important; }
+.z-application_mshelp-small				{ background-image: url(img/small/application-mshelp.gif) !important; }
+.z-application_postscript-eps-small		{ background-image: url(img/small/application-postscript-eps.gif) !important; }
+.z-application_postscript-ps-small		{ background-image: url(img/small/application-postscript-ps.gif) !important; }
+.z-application_x-shockwave-flash-small	{ background-image: url(img/small/application-shockwave-flash.gif) !important; }
+.z-text_html-small 						{ background-image: url(img/small/text-html.gif) !important; }
+.z-text_plain-small						{ background-image: url(img/small/text-plain.gif) !important; }
+.z-text_xml-small						{ background-image: url(img/small/text-xml.gif) !important; }
+.z-text_css-small 						{ background-image: url(img/small/text-css.gif) !important; }
+.z-audio_mpeg-small						{ background-image: url(img/small/audio.gif) !important; }
+.z-audio_mpg-small						{ background-image: url(img/small/audio.gif) !important; }
+.z-audio_x-wav-small					{ background-image: url(img/small/audio.gif) !important; }
+.z-audio_x-flac-small					{ background-image: url(img/small/audio.gif) !important; }
+.z-video_mpeg-small 					{ background-image: url(img/small/video.gif) !important; }
+.z-video_mpg-small 						{ background-image: url(img/small/video.gif) !important; }
+.z-video_mpeg-small 					{ background-image: url(img/small/video.gif) !important; }
+.z-video_quicktime-small				{ background-image: url(img/small/video.gif) !important; }
+.z-video_x-msvideo-small				{ background-image: url(img/small/video.gif) !important; }
+.z-video_x-ms-asf-small					{ background-image: url(img/small/video.gif) !important; }
+.z-image_psd-small						{ background-image: url(img/small/image-psd.gif) !important; }
+.z-image_svg-small						{ background-image: url(img/small/image-svg.gif) !important; }
+.z-user-small							{ background-image: url(img/small/user.gif); }
+.z-user-admin-small						{ background-image: url(img/small/user-admin.gif); }
+.z-user-write-small						{ background-image: url(img/small/user-write.gif); }
+.z-user-read-small						{ background-image: url(img/small/user-read.gif); }
+.z-owner-small							{ background-image: url(img/small/owner.gif); }
+.z-bwso_decisiontree-small				{ background-image: url(img/small/bwso-decisiontree.gif); }
+.z-bwso_checklist-small					{ background-image: url(img/small/bwso-checklist.gif); }
+.z-bwso_text-small						{ background-image: url(img/small/bwso-text.gif); }
+
+.z-image_bmp-small						{ background-image: url(img/small/image.gif); }
+.z-image_gif-small						{ background-image: url(img/small/image.gif); }
+.z-image_jpeg-small						{ background-image: url(img/small/image.gif); }
+.z-image_png-small						{ background-image: url(img/small/image.gif); }
+.z-image_tiff-small						{ background-image: url(img/small/image.gif); }
+.z-application_pdf-small				{ background-image: url(img/small/application-pdf.gif); }
+
+.z-decisiontree-small					{ background-image: url(img/small/bwso-decisiontree.gif); }
+.z-checklist-small						{ background-image: url(img/small/bwso-checklist.gif); }
+.z-textmodule-small						{ background-image: url(img/small/bwso-textmodule.gif); }
+
+
+
+
+/* -----------------
+   medium (others)
+   ----------------- */
+.z-resource_unknown-medium				{ background-image: url(img/medium/default.jpg); }
+.z-folder-medium						{ background-image: url(img/medium/folder.jpg); }
+.z-application_x-msdos-program-medium	{ background-image: url(img/medium/application-program.jpg) !important; }
+.z-application_msword-medium 			{ background-image: url(img/medium/application-msword.jpg) !important; }
+.z-application_rtf-medium 				{ background-image: url(img/medium/application-msword.jpg) !important; }
+.z-application_msword-vista-medium		{ background-image: url(img/medium/application-msword-vista.jpg); }
+.z-application_excel-medium				{ background-image: url(img/medium/application-excel.jpg) !important; }
+.z-application_excel-vista-medium		{ background-image: url(img/medium/application-excel-vista.jpg) !important; }
+.z-application_powerpoint-medium		{ background-image: url(img/medium/application-powerpoint.jpg) !important; }
+.z-application_powerpoint-vista-medium	{ background-image: url(img/medium/application-powerpoint-vista.jpg); }
+.z-application_zip-medium 				{ background-image: url(img/medium/application-zip.jpg) !important; }
+.z-application_x-javascript-medium		{ background-image: url(img/medium/application-js.jpg); }
+.z-application_mshelp-medium			{ background-image: url(img/medium/application-mshelp.jpg); }
+.z-application_postscript-eps-medium	{ background-image: url(img/medium/application-postscript-eps.jpg) !important; }
+.z-application_postscript-ps-medium		{ background-image: url(img/medium/application-postscript-ps.jpg) !important; }
+.z-application_x-shockwave-flash-medium	{ background-image: url(img/medium/application-shockwave-flash.jpg) !important; }
+.z-text_html-medium 					{ background-image: url(img/medium/text-html.jpg) !important; }
+.z-text_plain-medium					{ background-image: url(img/medium/text-plain.jpg) !important; }
+.z-text_xml-medium						{ background-image: url(img/medium/text-xml.jpg) !important; }
+.z-text_css-medium						{ background-image: url(img/medium/text-css.jpg) !important; }
+.z-audio_mpeg-medium 					{ background-image: url(img/medium/audio.jpg) !important; }
+.z-audio_mpg-medium 					{ background-image: url(img/medium/audio.jpg) !important; }
+.z-audio_x-wav-medium					{ background-image: url(img/medium/audio.jpg) !important; }
+.z-audio_x-flac-medium					{ background-image: url(img/medium/audio.jpg) !important; }
+.z-video_mpeg-medium 					{ background-image: none !important; }
+.z-video_mpg-medium 					{ background-image: none !important; }
+.z-video_mpeg-medium 					{ background-image: none !important; }
+.z-video_quicktime-medium				{ background-image: url(img/medium/video.jpg) !important; }
+.z-video_x-msvideo-medium				{ background-image: none !important; }
+.z-video_x-ms-asf-medium				{ background-image: none !important; }
+.z-image_psd-medium						{ background-image: url(img/medium/image-psd.jpg) !important; }
+.z-image_svg-medium						{ background-image: url(img/medium/image-svg.jpg) !important; }
+.z-user-medium							{ background-image: url(img/medium/user.jpg); }
+.z-user-admin-medium					{ background-image: url(img/medium/user-admin.jpg); }
+.z-user-write-medium					{ background-image: url(img/medium/user-write.jpg); }
+.z-user-read-medium						{ background-image: url(img/medium/user-read.jpg); }
+.z-owner-medium							{ background-image: url(img/medium/owner.jpg); }
+.z-bwso_decisiontree-medium				{ background-image: url(img/medium/bwso-decisiontree.jpg); }
+.z-bwso_checklist-medium				{ background-image: url(img/medium/bwso-checklist.jpg); }
+.z-bwso_text-medium						{ background-image: url(img/medium/bwso-text.jpg); }
+
+.z-image_bmp-medium						{ background-image: none !important; }
+.z-image_gif-medium						{ background-image: none !important; }
+.z-image_jpeg-medium					{ background-image: none !important; }
+.z-image_png-medium						{ background-image: none !important; }
+.z-image_tiff-medium					{ background-image: none !important; }
+
+/* todo */
+.z-application_pdf-medium				{ background-image: none !important; }
+.z-decisiontree-medium					{ background-image: url(img/medium/default.jpg); }
+.z-checklist-medium						{ background-image: url(img/medium/default.jpg); }
+.z-textmodule-medium					{ background-image: url(img/medium/default.jpg); }

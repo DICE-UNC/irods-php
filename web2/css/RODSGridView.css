@@ -1,0 +1,321 @@
+.z-detailed {
+    height: 18px;
+  	background-repeat: no-repeat;
+  	background-position: center left;
+  	padding-left: 18px
+}
+
+
+.z-item {
+	display:block;
+	cursor: default;
+	clear:both;	
+}
+.z-item-selected {
+	background: url(img/bg-document-statusbar-left.gif) repeat-y 0 0 #dce9f5;
+}
+.x-window .z-item-selected {
+	background-image: none; 
+}
+
+
+
+.z-item .z-default-item  {
+	margin:0 40px;
+	padding:10px;	
+}
+.z-profile .z-default-item {
+	margin:0;
+	padding:0;
+}
+
+
+
+.z-item .z-id-wrap {
+	margin-top:10px;
+	margin-bottom:3px;
+}
+.z-item .z-id {
+	color:#bebebe;
+}
+
+
+
+.z-item .z-content {
+	padding:0;
+	border:1px solid #b3b3b3;
+	background-color:#FFF;	
+}
+.z-item-over .z-content {
+		
+}
+.z-item-selected .z-content {
+	border-color:#000;	
+}
+
+
+
+.z-item .z-content .z-elements {
+	padding:10px 20px;			
+}
+
+
+
+.z-item .z-content h3.z-title {
+	border-bottom:1px solid #b5b5b8;	
+}
+.z-item .z-content h3.z-title span.z-text {
+	display:block;
+	padding:10px 20px;	
+}
+
+
+
+.z-item .z-info {
+	padding: 10px 20px;
+	background-color:#f9f9f9;
+	border-top:1px dotted #b5b5b8;
+}
+.z-item .z-info .z-action {
+	color:#747474;
+}
+
+
+
+.z-item .z-redirect {
+	color:#b5b5b8;
+	padding: 10px 20px;
+}
+.z-item .z-redirect .z-action {
+	color:#074AE5;
+}
+
+
+.z-item .z-action {
+	color: #000;	
+}
+
+.z-item .z-action-over {
+	background-color:#dce9f5;	
+}
+
+.z-item .z-extended .z-action {
+	color:#074AE5;
+}
+
+
+
+.z-item .z-richtext-container p,
+.z-item .z-richtext-container li {
+	line-height: 16px;
+}
+.z-item .z-richtext-container ul,
+.z-item .z-richtext-container ol {
+	margin:7px 20px;
+}
+.z-item .z-richtext-container ul {
+	list-style:square;
+}
+.z-item .z-richtext-container ol {
+	list-style:decimal;
+}
+.z-item .z-richtext-container li {
+	margin-left:20px;
+	margin-right:20px;	
+}
+.z-item .z-richtext-container .z-radiobutton {
+	margin-right:5px;
+}
+.z-item .z-richtext-container .z-checkbox {
+	margin-right:5px;
+}
+
+.z-item .z-richtext-container .inputField, 
+.z-item .z-richtext-container .textArea, 
+.z-item .z-richtext-container .variable, 
+.z-item .z-richtext-container .link,
+.z-item .z-richtext-container .z-inputfield, 
+.z-item .z-richtext-container .z-textarea, 
+.z-item .z-richtext-container .z-variable, 
+.z-item .z-richtext-container .z-link {
+	border:1px solid #c1d9f1;
+	font-size:11px;	
+	color:#000;
+	margin:1px 0;
+	padding:0 !important;
+	background-color:transparent;
+}
+.z-item .z-richtext-container .inputField,
+.z-item .z-richtext-container .z-inputfield {	  		
+	display: inline;
+	background-color:#f5f9ff;			
+}
+.z-item .z-richtext-container .textArea,
+.z-item .z-richtext-container .z-textarea {
+  	clear:both;
+	display: block;
+	height: 60px;
+  	width: 100%;
+	margin-top:5px;
+	margin-bottom:5px;
+	background-color:#f5f9ff;
+}
+.z-item .z-richtext-container .variable,
+.z-item .z-richtext-container .z-variable {	  		
+	display: inline;
+	color:#68b900;
+	border-width:0;
+	border-style:dotted;
+	border-color:#68b900;
+	padding:0;			
+}
+.z-item .z-richtext-container .philfe,
+.z-item .z-richtext-container .z-tooltip {
+	background:none !important;
+	border:none;
+	padding:0;
+	margin:0;
+	font-style:italic;
+	color:#ffc663;
+}
+.z-item .z-richtext-container .link,
+.z-item .z-richtext-container .z-link {
+	display: inline;
+	color:#337ed1;
+	border-width:0;
+	border-bottom:1px solid #337ed1;
+	background-color:transparent; 	
+	padding:0;
+	margin:0;	
+}
+.z-item .z-richtext-container h1 {
+	margin-top:14px;
+	margin-bottom:14px;
+	font-size:18px;
+	font-weight:bold;	
+}
+.z-item .z-richtext-container h2 {
+	margin-top:14px;
+	margin-bottom:7px;
+	font-size:14px;
+	font-weight:bold;	
+}
+.z-item .z-richtext-container h3 {
+	margin-top:7px;
+	margin-bottom:7px;
+	font-size:11px;
+	font-weight:bold;	
+}
+.z-item .z-richtext-container p {
+	margin-top:14px;
+	margin-bottom:14px;	
+}
+.z-item .z-richtext-container b,
+.z-item .z-richtext-container strong {
+	font-weight:bold;
+}
+.z-item .z-richtext-container i,
+.z-item .z-richtext-container em {
+	font-style:italic;
+}
+.z-item .z-richtext-container li {
+	margin-bottom:3px;	
+}
+.z-item .z-richtext-container .z-action {
+	display:block;
+}
+
+
+
+.z-item  .z-editInplace {
+			
+}
+
+
+
+
+.z-resource-default {
+	float:left;
+	clear:none !important;
+	width:auto !important;  
+	
+	margin:1px;
+	background:none !important;
+	overflow:hidden;
+	border:none;	
+}
+.z-resource-default .z-icon-area,
+.z-resource-default .z-icon-area table {
+	text-align:center;
+}
+.z-resource-default .z-icon-area table {
+	
+}
+.z-resource-default .z-icon-area table td {
+	padding:0 !important;
+	vertical-align:bottom;
+	text-align:center !important;		
+}
+.z-resource-default .z-icon-area .z-image-wrap {
+	border:1px solid #e0e0e0;
+	border-right-color: #c1c1c1;
+	border-bottom-color: #c1c1c1;
+	background-color:#FFF;	
+}
+.z-resource-default .z-icon-area img {
+	
+	margin:2px;
+	border:1px solid #cecece;
+}
+.z-resource-default .z-text-area {
+	margin-top:4px;
+	height:14px;
+	white-space:nowrap;
+	margin-left:3px;
+	margin-right:3px;
+}
+.z-resource-default * {
+	
+}
+.z-resource-default .z-text-area .z-text {
+	overflow:hidden;	
+}
+.ext-ie .z-resource-default .z-text-area {
+	height:19px;
+}
+
+
+.z-mediumThumbnails {
+	width:114px;
+	height:70px;
+	margin-bottom:30px;	
+}
+.x-grid3-row-over .z-mediumThumbnails {
+	background: url(img/bg-medium-thumbnail.gif) no-repeat 0 0;	
+}
+.x-grid3-row-selected .z-mediumThumbnails {
+	background: url(img/bg-medium-thumbnail-selected.gif) no-repeat 0 0;	
+}
+.z-mediumThumbnails .z-icon-area {
+	height:51px;
+	background-repeat:no-repeat;
+	background-position:50% 50%;
+	background-color:transparent;
+}
+.z-mediumThumbnails .z-icon-area table td {
+	height:51px;
+}
+.z-mediumThumbnails .z-text-area {
+	text-align:center;
+	width:108px;
+	overflow:hidden;
+}
+.z-mediumThumbnails .z-icon-area {
+	background-position: 0 0;
+}
+.x-grid3-row-over .z-mediumThumbnails .z-icon-area {
+	background-position: 0 -70px;
+}
+.x-grid3-row-selected .z-mediumThumbnails .z-icon-area {
+	background-position: 0 -140px;
+}

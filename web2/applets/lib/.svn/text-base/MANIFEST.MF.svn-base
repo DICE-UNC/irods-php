@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.6.5
+X-COMMENT: Main-Class will be added automatically by build
+Class-Path: lib/jargon.jar
+Created-By: 1.5.0_06-b05 (Sun Microsystems Inc.)
+Main-Class: Helper
+
+Name: edu/sdsc/grid/gui/Helper.class
+SHA1-Digest: I6iZ5g16QRY29cBkCKJCzxZ2W1k=
+
+Name: edu/sdsc/grid/gui/Helper$1.class
+SHA1-Digest: RfPqtZLYvqgJnFgBk3wlwGJt9RE=
+
+Name: edu/sdsc/grid/gui/Helper$2.class
+SHA1-Digest: w/RUWbsUGX2jQfZbhw/c5GJn7KU=
+

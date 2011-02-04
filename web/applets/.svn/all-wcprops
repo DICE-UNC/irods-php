@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/187/trunk/clients/web/applets
+END
+json.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/62/trunk/clients/web/applets/json.jar
+END
+UploadApplet.jar
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/73/trunk/clients/web/applets/UploadApplet.jar
+END
+hsqldb.jar
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/62/trunk/clients/web/applets/hsqldb.jar
+END
+jargon.jar
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/62/trunk/clients/web/applets/jargon.jar
+END
+UploadApplet.html
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2/trunk/clients/web/applets/UploadApplet.html
+END

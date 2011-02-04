@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/97/trunk/clients/prods/test
+END
+execUserRule.php
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2/trunk/clients/prods/test/execUserRule.php
+END
+getReplInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/clients/prods/test/getReplInfo.php
+END
+metadata.php
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2/trunk/clients/prods/test/metadata.php
+END
+repl.php
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2/trunk/clients/prods/test/repl.php
+END
+query.php
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/97/trunk/clients/prods/test/query.php
+END
+tempPassword.php
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2/trunk/clients/prods/test/tempPassword.php
+END
