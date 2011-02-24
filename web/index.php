@@ -8,11 +8,13 @@
     $port=isset($parsed_redirect['port'])?$parsed_redirect['port']:'';
     $user=isset($parsed_redirect['user'])?$parsed_redirect['user']:'';
     $pass=isset($parsed_redirect['pass'])?$parsed_redirect['pass']:'';
-    $init_path=isset($parsed_redirect['path'])?$parsed_redirect['path']:'';
+    // $init_path=isset($parsed_redirect['path'])?$parsed_redirect['path']:'';
+    $init_path="";
+    $fzone=isset($parsed_redirect['fzone'])?$parsed_redirect['fzone']:'';
     $errmsg=isset($_REQUEST['errmsg'])?$_REQUEST['errmsg']:'';
      
     $loginform_js="generateLoginForm('form-login','$host',
-      '$port','$user','$pass','$init_path','$errmsg');";
+      '$port','$user','$pass', '$fzone', $init_path','$errmsg');";
   }
   else
     $loginform_js="generateLoginForm('form-login');";

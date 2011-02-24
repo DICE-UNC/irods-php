@@ -1,5 +1,5 @@
 
-function generateLoginForm(formid, host, port, user, pass, init_path, errmsg)
+function generateLoginForm(formid, host, port, user, pass, fzone, init_path, errmsg)
 {    
   var loginform = new Ext.form.Form({
       labelWidth: 70, // label settings here cascade unless overridden
@@ -39,6 +39,14 @@ function generateLoginForm(formid, host, port, user, pass, init_path, errmsg)
           value: pass,
           allowBlank:false,
           inputType: 'password'
+      }),
+
+      new Ext.form.TextField({
+          fieldLabel: 'Zone',
+          name: 'fzone',
+          width:175,
+          value: fzone,
+          allowBlank:false,
       })
   );
   
@@ -46,7 +54,8 @@ function generateLoginForm(formid, host, port, user, pass, init_path, errmsg)
   {
     document.getElementById('form-login-err').innerHTML =errmsg;
   }
-  
+
+  /* Lisa Stillwell removed this 020811 to add explicit text entry for Zone
   if ( (init_path!=null) && (init_path.length > 1) )
   {
     
@@ -59,6 +68,8 @@ function generateLoginForm(formid, host, port, user, pass, init_path, errmsg)
       })
     );  
   }
+  */
+
   loginform.on("actioncomplete",function(form, action){
       window.location = "browse.php#ruri="+action.result.ruri_home;
       //alert ("result: "+ action.result.ruri_home);
@@ -81,8 +92,12 @@ function generateLoginForm(formid, host, port, user, pass, init_path, errmsg)
       alert("you entered: \n"+str);
       */
       var targeturl='services/login.php';
+
+      /* Lisa Stillwell removed this 020811 to add explicit text entry for Zone
       if ( (init_path!=null) && (init_path.length > 1) )
         targeturl=targeturl+"?init_path="+init_path;
+      */
+
       loginform.submit({url:targeturl});
         
   }, loginform);

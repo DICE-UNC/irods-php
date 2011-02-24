@@ -13,8 +13,9 @@ $host= (isset($_REQUEST['host']))?$_REQUEST['host']:DEFAULT_RODS_HOST;
 $port= (isset($_REQUEST['port']))?$_REQUEST['port']:DEFAULT_RODS_PORT;
 $user= (isset($_REQUEST['user']))?$_REQUEST['user']:DEFAULT_RODS_USER;
 $pass= (isset($_REQUEST['pass']))?$_REQUEST['pass']:DEFAULT_RODS_PASS;
+$fzone= (isset($_REQUEST['fzone']))?$_REQUEST['fzone']:'';
 
-$acct=new RODSAccount($host, $port, $user, $pass);
+$acct=new RODSAccount($host, $port, $user, $pass, $fzone);
 try {
   $acct->getUserInfo();
   $_SESSION['acct_manager']->add($acct);

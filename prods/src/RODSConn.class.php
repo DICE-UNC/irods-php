@@ -275,7 +275,7 @@ class RODSConn
   {
     if (!isset($user))
       $user=$this->account->user;
-    
+
     // set selected value
     $select_val=array("COL_USER_ID","COL_USER_NAME","COL_USER_TYPE",
             "COL_USER_ZONE","COL_USER_DN","COL_USER_INFO",
@@ -293,7 +293,15 @@ class RODSConn
       $retval['id']=$que_result["COL_USER_ID"][0];
       $retval['name']=$que_result["COL_USER_NAME"][0];
       $retval['type']=$que_result["COL_USER_TYPE"][0];
-      $retval['zone']=$que_result["COL_USER_ZONE"][0];
+      // $retval['zone']=$que_result["COL_USER_ZONE"][0]; This can cause confusion if
+      // username is same as another federated grid - sometimes multiple records are returned.
+      // Changed source to force user to provide a zone until another method is suggested.
+      if ($this->account->zone == "") {
+          $retval['zone']=$que_result["COL_USER_ZONE"][0];
+      }
+      else {
+          $retval['zone']=$this->account->zone;
+      }
       $retval['dn']=$que_result["COL_USER_DN"][0];
       $retval['info']=$que_result["COL_USER_INFO"][0];
       $retval['comment']=$que_result["COL_USER_COMMENT"][0];
