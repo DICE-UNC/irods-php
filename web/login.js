@@ -46,7 +46,7 @@ function generateLoginForm(formid, host, port, user, pass, fzone, init_path, err
           name: 'fzone',
           width:175,
           value: fzone,
-          allowBlank:false,
+          allowBlank:false
       })
   );
   
