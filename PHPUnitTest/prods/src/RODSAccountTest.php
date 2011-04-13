@@ -170,7 +170,7 @@ class RODSAccountTest extends PHPUnit_Framework_TestCase {
         // (RODSAccount &$account, $path_str, $verify=false, RODSDirStats $stats=NULL)
 
         // set up mock parameters
-        //$retval = $this->stubGetUserInfo();
+        $retval = $this->stubGetUserInfo();
         $mocked_rodsacct_methods = array('getUserInfo');
         $mocked_rodsacct_construct_params = array($this->host, $this->port, $this->name, $this->passwd, $this->zone);
 
@@ -204,6 +204,7 @@ class RODSAccountTest extends PHPUnit_Framework_TestCase {
     public function testGetUserHomeDirURI() {
 
         // set up mock parameters
+        $retval = $this->stubGetUserInfo();
         $mocked_rodsacct_methods = array('getUserInfo');
         $mocked_rodsacct_construct_params = array($this->host, $this->port, $this->name, $this->passwd, $this->zone);
 
@@ -234,6 +235,7 @@ class RODSAccountTest extends PHPUnit_Framework_TestCase {
     public function testGetUserTrashDir() {
 
         // set up mock parameters
+        $retval = $this->stubGetUserInfo();
         $mocked_rodsacct_methods = array('getUserInfo');
         $mocked_rodsacct_construct_params = array($this->host, $this->port, $this->name, $this->passwd, $this->zone);
 
@@ -267,6 +269,7 @@ class RODSAccountTest extends PHPUnit_Framework_TestCase {
     public function testGetUserTrashDirURI() {
 
         // set up mock parameters
+        $retval = $this->stubGetUserInfo();
         $mocked_rodsacct_methods = array('getUserInfo');
         $mocked_rodsacct_construct_params = array($this->host, $this->port, $this->name, $this->passwd, $this->zone);
 

@@ -99,7 +99,7 @@ class stubRODSConn extends RODSConn {
                 "COL_DATA_NAME" => $dname_array,
                 "COL_COLL_NAME" => $name_array,
                 "COL_D_DATA_ID" => $id_array,
-                "COL_DATA_TYPE_NAME" => $dtype_name,
+                "COL_DATA_TYPE_NAME" => $dtype_array,
                 "COL_DATA_RESC_NAME" => $dresc_array,
                 "COL_DATA_SIZE" => $dszie_array,
                 "COL_D_OWNER_NAME", $owner_array,
