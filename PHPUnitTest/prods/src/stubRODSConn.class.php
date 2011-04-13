@@ -93,16 +93,16 @@ class stubRODSConn extends RODSConn {
             $id_array = array("2");
             $dname_array = array("first_file.txt");
             $dtype_array = array("generic");
-            $dresc_array_= array("testResc");
+            $dresc_array = array("testResc");
             $dsize_array = array("1020157");
             $result_array = array(
                 "COL_DATA_NAME" => $dname_array,
                 "COL_COLL_NAME" => $name_array,
                 "COL_D_DATA_ID" => $id_array,
                 "COL_DATA_TYPE_NAME" => $dtype_array,
-                "COL_DATA_RESC_NAME" => $dresc_array,
-                "COL_DATA_SIZE" => $dszie_array,
-                "COL_D_OWNER_NAME", $owner_array,
+                "COL_D_RESC_NAME" => $dresc_array,
+                "COL_DATA_SIZE" => $dsize_array,
+                "COL_D_OWNER_NAME" => $owner_array,
                 "COL_D_OWNER_ZONE" => $zone_array,
                 "COL_D_CREATE_TIME" => $create_array,
                 "COL_D_MODIFY_TIME" => $modify_array,

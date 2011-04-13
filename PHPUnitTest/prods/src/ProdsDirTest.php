@@ -367,7 +367,7 @@ class ProdsDirTest extends PHPUnit_Framework_TestCase {
         $terms = array("descendantOnly" => true, "recursive" => false, "logicalFile" => false);
         $total_count = -1;
 
-        $stats = $prods_dir_stub->findFiles($terms, &$total_count, 0, -1, array("COL_DATA_NAME"),
+        $stats = $prods_dir_stub->findFiles($terms, &$total_count, 0, -1, array("name"),
                                            array('stubRODSConnManager', 'getConn'),
                                            array('stubRODSConnManager', 'releaseConn'));
         // check total count return
