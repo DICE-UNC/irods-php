@@ -25,7 +25,7 @@ class RODSGenQueSelFlds
     $this->names=$names;
     $this->attrs=array();
     $this->indexes=array();
-    
+
     for($i=0; $i<count($names); $i++)
     {
       $name=$names[$i];
@@ -155,6 +155,11 @@ class RODSGenQueSelFlds
   public function getCount()
   {
     return count($this->names);
+  }
+
+  public function getNames()
+  {
+      return $this->names;
   }
   
 }

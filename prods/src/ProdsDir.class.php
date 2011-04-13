@@ -91,13 +91,16 @@ class ProdsDir extends ProdsPath
  /**
 	* Verify if this dir exist with server. This function shouldn't be called directly, use {@link exists}
 	*/
-  protected function verify()
+  //protected function verify()
+  protected function verify($get_cb=array('RODSConnManager','getConn'),
+                            $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $this->path_exists= $conn -> dirExists ($this->path_str);
-    RODSConnManager::releaseConn($conn);
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
   }
-
 
  /**
 	* Resets the directory stream to the beginning of the directory.
@@ -173,11 +176,16 @@ class ProdsDir extends ProdsPath
   * @param string $name full path of the new dir to be made on server
   * @return ProdsDir the new directory just created (or already exists)
   */
-  public function mkdir($name)
+  // public function mkdir($name)
+  public function mkdir($name,
+                        $get_cb=array('RODSConnManager','getConn'),
+                        $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $conn->mkdir($this->path_str."/$name");
-    RODSConnManager::releaseConn($conn);
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
     return (new ProdsDir($this->account, $this->path_str."/$name"));
   }
 
@@ -193,13 +201,19 @@ class ProdsDir extends ProdsPath
   * - 'lastObjPath' - last object that was processed.
   * If this function returns 1, progress will be stopped.
   */
+  // public function rmdir($recursive=true,$force=false, $additional_flags=array(),
+  //  $status_update_func=null)
   public function rmdir($recursive=true,$force=false, $additional_flags=array(),
-    $status_update_func=null)
+                        $status_update_func=null,
+                        $get_cb=array('RODSConnManager','getConn'),
+                        $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $conn->rmdir($this->path_str, $recursive, $force, $additional_flags,
       $status_update_func);
-    RODSConnManager::releaseConn($conn);
+    // RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
   }
 
  /**
@@ -207,14 +221,19 @@ class ProdsDir extends ProdsPath
   * @param boolean $force_reload If stats already present in the object, and this flag is true, a force reload will be done.
   * @return RODSDirStats the stats object, note that if this object will not refresh unless $force_reload flag is used.
   */
-  public function getStats($force_reload=false)
+  // public function getStats($force_reload=false)
+  public function getStats($force_reload=false,
+                            $get_cb=array('RODSConnManager','getConn'),
+                            $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
     if ( ($force_reload===false)&&($this->stats) )
       return $this->stats;
 
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $stats=$conn->getDirStats($this->path_str);
-    RODSConnManager::releaseConn($conn);
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
 
     if ($stats===false) $this->stats=NULL;
     else $this->stats=$stats;
@@ -222,14 +241,17 @@ class ProdsDir extends ProdsPath
   }
 
  /**
-  * get the dir statictics, such as total number of files under this dir
-  * @param string $fld Name of the statictics, supported values are:
+  * get the dir statistics, such as total number of files under this dir
+  * @param string $fld Name of the statistics, supported values are:
   * - num_dirs number of directories
   * - num_files number of files
   * @param boolean $recursive wheather recursively through the sub collections, default is true.
   * @return result, an integer value, assosiated with the query.
   */
-  public function queryStatistics($fld, $recursive=true)
+  //public function queryStatistics($fld, $recursive=true)
+  public function queryStatistics($fld, $recursive=true,
+                                    $get_cb=array('RODSConnManager','getConn'),
+                                    $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
     $condition=new RODSGenQueConds();
     $select=new RODSGenQueSelFlds();
@@ -258,9 +280,11 @@ class ProdsDir extends ProdsPath
             'PERR_USER_INPUT_ERROR');
       }
 
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $results = $conn->query($select, $condition);
-    RODSConnManager::releaseConn($conn);
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
     $result_values=$results->getValues();
 
     if (isset($result_values[$ret_data_index][0]))
@@ -299,8 +323,11 @@ class ProdsDir extends ProdsPath
   * The possible array value must be boolean: true stands for 'asc' and false stands for 'desc', default is 'asc'
   * @return array of ProdsPath objects (ProdsFile or ProdsDir).
   */
+  //public function findFiles(array $terms, &$total_count, $start=0, $limit=-1, array $sort_flds=array())
   public function findFiles(array $terms, &$total_count, $start=0, $limit=-1,
-    array $sort_flds=array())
+                            array $sort_flds=array(),
+                            $get_cb=array('RODSConnManager','getConn'),
+                            $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
     $flds=array("COL_DATA_NAME"=>NULL,"COL_D_DATA_ID"=>NULL,
         "COL_DATA_TYPE_NAME"=>NULL, "COL_D_RESC_NAME"=>NULL,
@@ -454,9 +481,11 @@ class ProdsDir extends ProdsPath
       $select->update('COL_D_MODIFY_TIME','max');
     }
 
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $results = $conn->query($select, $condition, $start, $limit);
-    RODSConnManager::releaseConn($conn);
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
 
     $total_count=$results->getTotalCount();
     $result_values=$results->getValues();

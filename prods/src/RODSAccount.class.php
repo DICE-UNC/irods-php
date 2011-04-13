@@ -83,7 +83,7 @@ class RODSAccount
   
   public function getSignature()
   {
-    return (bin2hex(md5( "$this->user.$this->zone:this->pass@$this->host:$this->port", TRUE )));  
+    return (bin2hex(md5( "$this->user.$this->zone:this->pass@$this->host:$this->port", TRUE )));
   }
   
   public function __toString()
@@ -103,11 +103,15 @@ class RODSAccount
   * @param string username, if not specified, it will use current username instead
   * @return array with fields: id, name, type, zone, dn, info, comment, ctime, mtime. If user not found return empty array. 
   */
-  public function getUserInfo($username=NULL)
+  public function getUserInfo($username=NULL,
+                              $get_cb=array('RODSConnManager','getConn'),
+                              $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
-    $conn = RODSConnManager::getConn($this);
+    //$conn = RODSConnManager::getConn($this);
+    $conn = call_user_func($get_cb, $this);
     $userinfo= $conn -> getUserInfo ($username);
-    RODSConnManager::releaseConn($conn);
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
     if ( (!empty($userinfo))&&(!empty($userinfo['zone'])) )
       $this->zone=$userinfo['zone'];
     return $userinfo;   
@@ -117,11 +121,14 @@ class RODSAccount
   * Get a temp password for current user
   * @return string of temp password
   */
-  public function getTempPassword()
+  public function getTempPassword($get_cb=array('RODSConnManager','getConn'),
+                                  $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
-    $conn = RODSConnManager::getConn($this);
+    //$conn = RODSConnManager::getConn($this);
+    $conn = call_user_func($get_cb, $this);
     $temppass= $conn -> getTempPassword ();
-    RODSConnManager::releaseConn($conn);
+    // RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
     return $temppass;   
   }
   
@@ -177,3 +184,4 @@ class RODSAccount
     return $dir->toURI();
   }
 }
+?>

@@ -117,5 +117,10 @@ class RODSGenQueConds
     return ( new RP_KeyValPair(count($this->cond_kw['names']), 
       $this->cond_kw['sysnames'], $this->cond_kw['values']) );
   }
+
+  public function getCond()
+  {
+      return $this->cond;
+  }
 }
 ?>

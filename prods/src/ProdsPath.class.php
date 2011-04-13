@@ -28,7 +28,7 @@ abstract class ProdsPath
   
   protected $parent_path;
   protected $name;
-  
+
  /**
 	* Default Constructor. Because this class is abstract, this constructor should not be called directly.
 	*
@@ -70,6 +70,7 @@ abstract class ProdsPath
   {
     if ( isset($this->path_exists) )
       return $this->path_exists;
+
     else
     {
       $this->verify();
@@ -86,7 +87,9 @@ abstract class ProdsPath
 	* Get meta data of this path (file or dir).
 	* @return array array of RODSMeta. 
 	*/
-  public function getMeta()
+  //public function getMeta()
+  public function getMeta($get_cb=array('RODSConnManager','getConn'),
+                          $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
     if ($this instanceof ProdsFile)
       $type='d';
@@ -96,9 +99,11 @@ abstract class ProdsPath
     else
        throw new RODSException("Unsupported data type:".get_class($this),
         "PERR_INTERNAL_ERR");
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $meta_array= $conn -> getMeta ($type,$this->path_str);
-    RODSConnManager::releaseConn($conn);
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
     return $meta_array;
   }
     
@@ -114,7 +119,10 @@ abstract class ProdsPath
  /**
   * Add metadata to this path (file or dir)
   */
-  public function addMeta(RODSMeta $meta)
+  // public function addMeta(RODSMeta $meta)
+  public function addMeta(RODSMeta $meta,
+                          $get_cb=array('RODSConnManager','getConn'),
+                          $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
     if ($this instanceof ProdsFile)
       $type='d';
@@ -125,15 +133,20 @@ abstract class ProdsPath
        throw new RODSException("Unsupported data type:".get_class($this),
         "PERR_INTERNAL_ERR");
     
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $conn -> addMeta ($type,$this->path_str,$meta);
-    RODSConnManager::releaseConn($conn);  
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
   }
   
  /**
   * remove metadata to this path (file or dir)
   */
-  public function rmMeta(RODSMeta $meta)
+  // public function rmMeta(RODSMeta $meta)
+  public function rmMeta(RODSMeta $meta,
+                          $get_cb=array('RODSConnManager','getConn'),
+                          $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
     if ($this instanceof ProdsFile)
       $type='d';
@@ -144,16 +157,21 @@ abstract class ProdsPath
        throw new RODSException("Unsupported data type:".get_class($this),
         "PERR_INTERNAL_ERR");
     
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $conn -> rmMeta ($type,$this->path_str,$meta);
-    RODSConnManager::releaseConn($conn);  
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
   }
   
  /**
   * remove metadata of this path (file or dir) by id
   * @param integer metaid id of the metadata entry
   */
-  public function rmMetaByID ($metaid)
+  // public function rmMetaByID ($metaid)
+  public function rmMetaByID ($metaid,
+                          $get_cb=array('RODSConnManager','getConn'),
+                          $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
     if ($this instanceof ProdsFile)
       $type='d';
@@ -164,15 +182,20 @@ abstract class ProdsPath
        throw new RODSException("Unsupported data type:".get_class($this),
         "PERR_INTERNAL_ERR");
     
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $conn -> rmMetaByID ($type,$this->path_str,$metaid);
-    RODSConnManager::releaseConn($conn);  
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
   }
   
  /**
   * copy meta data from this path (file or dir) to $dest path
   */
-  public function cpMeta(ProdsPath $dest)
+  // public function cpMeta(ProdsPath $dest)
+  public function cpMeta(ProdsPath $dest,
+                    $get_cb=array('RODSConnManager','getConn'),
+                    $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
     if ($this instanceof ProdsFile)
       $type_src='d';
@@ -192,24 +215,31 @@ abstract class ProdsPath
        throw new RODSException("Unsupported data type:".get_class($this),
         "PERR_INTERNAL_ERR");    
     
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $conn -> cpMeta ($type_src,$type_dest,$this->path_str,$dest->path_str);
-    RODSConnManager::releaseConn($conn);  
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
   }
   
  /**
   * rename this path (file of dir)
   * @param string $new_path_str new path string to be renamed to.
   */
-  public function rename($new_path_str)
+  // public function rename($new_path_str)
+  public function rename($new_path_str,
+                    $get_cb=array('RODSConnManager','getConn'),
+                    $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
     if ($this instanceof ProdsFile)
       $type=0;
     else
       $type=1;
-    $conn = RODSConnManager::getConn($this->account);
+    //$conn = RODSConnManager::getConn($this->account);
+    $conn = call_user_func($get_cb, $this->account);
     $conn->rename($this->path_str, $new_path_str,$type);
-    RODSConnManager::releaseConn($conn); 
+    //RODSConnManager::releaseConn($conn);
+    call_user_func($rel_cb, $conn);
     $this->path_str=$new_path_str;
     $this->parent_path=dirname($this->path_str);
     $this->name=basename($this->path_str);
@@ -250,5 +280,6 @@ abstract class ProdsPath
   {
     return $this->account->toURI().$this->path_str;    
   }
+
 }  
 ?>
