@@ -1570,10 +1570,13 @@ class RODSConn
       $num_row_added=$results->addResults($genque_result_pk);
       $continueInx=$genque_result_pk->continueInx;
       $start=$start+$results->getNumRow();
-    } while ( ($continueInx >= 0) && 
-      ( ($results->getNumRow() < $limit) || ($limit < 0) )  &&
-      ($num_row_added <= $max_result_per_query) &&
-      ($num_row_added <  $results->getTotalCount()) ); 
+    } while ( ($continueInx > 0) &&
+      ( ($results->getNumRow() < $limit) || ($limit < 0) ) );
+      // changed by lisa@renci.org - to address irods chat list problem: [iROD-Chat:6117] PRODS - limited to 500 files
+      // } while ( ($continueInx >= 0) &&
+      // ( ($results->getNumRow() < $limit) || ($limit < 0) )  &&
+      // ($num_row_added <= $max_result_per_query) &&
+      // ($num_row_added <  $results->getTotalCount()) );
     
     return $results;  
   } 
