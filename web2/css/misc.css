@@ -1,9 +1,0 @@
-/* css needed for yui-history */
-#yui-history-iframe {   
-  position:absolute;    
-  top:0; left:0;        
-  width:1px; height:1px;
-  visibility:hidden;    
-}   
-
-.z-panel-loading {padding:5px 10px 5px 25px;background:transparent url( 'img/loading.gif' ) no-repeat 5px 5px;line-height:16px;}                    
