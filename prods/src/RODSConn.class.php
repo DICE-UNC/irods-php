@@ -1355,9 +1355,16 @@ class RODSConn
         $ret_arr["$label"]=RODSKeyValPair::fromPacket($param->KeyValPair_PI);
       }
       else
+      if ($param->type=='ExecCmdOut_PI')
+      {
+        $label=$param->label;
+	$exec_ret_val =  $param->ExecCmdOut_PI->buf;
+        $ret_arr["$label"]=$exec_ret_val;
+      }
+      else
       {
         throw new RODSException("RODSConn::execUserRule got. ".
-          "an unexpected output praram with type: '$param->type' \n",
+          "an unexpected output param with type: '$param->type' \n",
           "PERR_UNEXPECTED_PACKET_FORMAT");
       }
     }
