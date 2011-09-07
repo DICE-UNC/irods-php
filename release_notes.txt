@@ -1,0 +1,35 @@
+
+*'''Project''': iRODS PHP Library PRODS and PRODS Web Browser
+*'''Date''': 09/06/2011
+*'''Release Version''': 3.0.0 beta1 Release
+*'''git tag''':  3_0_0_beta1
+
+
+==News==
+
+This is the consolidated and updated release of the PRODS PHP library for iRODS.  This library provides a pure-PHP interface to the iRODS system.  This library is suitable for simple and quick interfaces to the iRODS data grid, and will be maintained for stability and compatibility.  If advanced or higher-performance interfaces are desired, the Jargon Java API should be considered.  Note that PHP, Jython, JRuby, Groovy, and other JVM dynamic languages can be used with Jarogn.
+
+The PRODS PHP Web Browser is also included in this project, and remains supported.  Note that, in the 3-4 month time-frame, the PHP Web Browser functionality will be subsumed by the idrop-web browser and idrop-swing client. 
+
+Please go to [[https://code.renci.org/gf/project/irodsphp/] for the latest news and info.
+
+Note that the git repository is now the canonical version of the PHP code.  The code in the iRODS SVN server is deprecated and will be taken down at the 3.0.0 release point.  There may be other versions in Google Code and other places, but these should be considered obsolete.
+
+
+==Requirements==
+
+
+==Libraries==
+
+
+
+==Bug Fixes==
+
+
+
+iRODS PHP > auth error using PRODS web browser	2011-02-04 06:45:24
+iRODS PHP > Takes too long to populate pull-down menu of attribute names when collections with many AVUs	2011-02-15 11:13:28
+iRODS PHP > Max Results set too low when retrieving RODS File Stats	2011-02-15 11:31:18
+iRODS PHP > PRODS - limited to 500 files	2011-04-26 13:24:30
+iRODS PHP > argument to call_user_func must be passed as reference in newer versions of PHP	2011-07-29 04:54:33
+ 
