@@ -1553,8 +1553,9 @@ class RODSConn
     $results = new RODSGenQueResults();
     do {
       // construct RP_GenQueryInp packet
+      $options = 1 | $GLOBALS['PRODS_GENQUE_NUMS']['RETURN_TOTAL_ROW_COUNT'];
       $genque_input_pk= new RP_GenQueryInp($max_result_per_query, 
-        $continueInx, $condkw_pk, $select_pk, $cond_pk, 1, $start);
+        $continueInx, $condkw_pk, $select_pk, $cond_pk, $options, $start);
       
       // contruce a new API request message, with type GEN_QUERY_AN
       $msg=new RODSMessage("RODS_API_REQ_T",$genque_input_pk,
