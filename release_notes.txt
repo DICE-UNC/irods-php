@@ -1,8 +1,8 @@
 
 *'''Project''': iRODS PHP Library PRODS and PRODS Web Browser
-*'''Date''': 03/14/2012
-*'''Release Version''': 3.1 Release
-*'''git tag''':  3_1
+*'''Date''': 03/20/2012
+*'''Release Version''': 3.1.0 Release
+*'''git tag''':  3_1_0
 
 
 ==News==
