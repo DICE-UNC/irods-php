@@ -1,9 +1,8 @@
 
 *'''Project''': iRODS PHP Library PRODS and PRODS Web Browser
-*'''Date''': 03/20/2012
-*'''Release Version''': 3.1.0 Release
-*'''git tag''':  3_1_0
-
+*'''Date''': 11/26/2012
+*'''Release Version''': 3.2.0 Release
+*'''git tag''':  3.2.0
 
 ==News==
 
@@ -18,13 +17,12 @@ Note that the git repository is now the canonical version of the PHP code.  The 
 
 ==Requirements==
 
-
 ==Libraries==
 
+==Features==
+
+*[#1076] irods 3.2 release activities
+**Added a LICENSE.txt file at the top project level
 
 
 ==Bug Fixes==
-
-
-
-iRODS PHP > Search only retrieves 100 records	2011-10-30 15:55:08
