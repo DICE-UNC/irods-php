@@ -38,7 +38,7 @@ class RODSPacket
     $doc = new DOMDocument();
     $root=$this->toDOMElement($doc);
     $doc->appendChild($root);
-    return ($doc->saveXML($root));
+   return ($doc->saveXML($root, LIBXML_NOEMPTYTAG));
   }
   
   /*

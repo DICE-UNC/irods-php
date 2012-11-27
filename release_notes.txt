@@ -26,3 +26,6 @@ Note that the git repository is now the canonical version of the PHP code.  The 
 
 
 ==Bug Fixes==
+
+*[#1071] php uses self-closing tags for empty HTML tags
+**Added patch suggested by community  Changing line 41 in RODSPacket.class.php (in PRods) from return ($doc->saveXML($root)); to return ($doc->saveXML($root, LIBXML_NOEMPTYTAG));
