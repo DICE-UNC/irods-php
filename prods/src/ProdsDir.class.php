@@ -424,6 +424,7 @@ class ProdsDir extends ProdsPath
           break;
         case 'rescname':
           $condition->add('COL_D_RESC_NAME', '=', $term_val);
+          break;
         case 'metadata':
           $meta_array=$term_val;
           foreach($meta_array as $meta)
