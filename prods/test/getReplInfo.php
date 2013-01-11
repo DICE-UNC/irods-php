@@ -3,7 +3,7 @@
 require_once("../src/Prods.inc.php");
 
 
-$account=new RODSAccount("localhost", 1247, "rods", "RODS", "tempZone");
+$account=new RODSAccount("localhost", 1247, "rods", "rods", "tempZone");
 $target_file='/tempZone/home/rods/repl_test/ruleInp1';
 
 try {

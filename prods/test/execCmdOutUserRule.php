@@ -2,7 +2,7 @@
 
 require_once("../src/Prods.inc.php");
 
-$account=new RODSAccount("localhost", 1247, "rods", "RODS", "tempZone");
+$account=new RODSAccount("localhost", 1247, "rods", "rods", "tempZone");
 
 $rule_body  = "printHello||print_hello|nop";
 $input_params = array();
