@@ -13,7 +13,7 @@ error_reporting(0);
 // username: demouser, password: demopass, server: srbbrick15.sdsc.edu, port: 1247
 $account = new RODSAccount('localhost', 1247, 'rods', 'rods');
 
-$myfile=new ProdsFile($account,"/tempZone/home/rods/testphoto.png");
+$myfile = new ProdsFile($account, "/tempZone/home/rods/testphoto.png");
 
 //header('Content-Type: image/png');
 
@@ -21,7 +21,7 @@ $myfile=new ProdsFile($account,"/tempZone/home/rods/testphoto.png");
 $myfile->open("r");
 //while($str=$myfile->read())
 //$str=file_get_contents("rods://rods:rods@localhost:1247/tempZone/home/rods/testphoto.png");
-$str=file_get_contents("rods://rods:rods@localhost:1247/tempZone/home/rods/phrases.html");
-    echo $str;
+$str = file_get_contents("rods://rods:rods@localhost:1247/tempZone/home/rods/phrases.html");
+echo $str;
 //close the file pointer
 $myfile->close();
