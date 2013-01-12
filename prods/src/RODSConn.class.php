@@ -192,6 +192,17 @@ class RODSConn
 
         $this->connected = true;
 
+        // use ticket if specified
+        if( !empty($this->account->ticket) ) {
+            $ticket_packet = new RP_ticketAdminInp('session', $this->account->ticket);
+            $msg = new RODSMessage('RODS_API_REQ_T', $ticket_packet, 723);
+            fwrite($conn, $msg->pack());
+
+            // get response
+            $msg = new RODSMessage();
+            $intInfo = $msg->unpack($conn);
+        }
+
         // find zone for user, if not specified
         if (empty($this->account->zone)) {
             $userinfo = $this->getUserInfo();

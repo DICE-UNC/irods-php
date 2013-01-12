@@ -21,11 +21,12 @@ class RODSAccount
     public $port;
     public $zone;
     public $default_resc;
+    public $ticket;
 
     /**#@-*/
 
     public function __construct($host, $port, $user, $pass, $zone = "",
-                                $default_resc = "")
+                                $default_resc = "", $ticket = '')
     {
         $this->host = $host;
         $this->port = $port;
@@ -33,6 +34,7 @@ class RODSAccount
         $this->pass = $pass;
         $this->zone = $zone;
         $this->default_resc = $default_resc;
+        $this->ticket = $ticket;
     }
 
     /**
