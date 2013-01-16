@@ -201,6 +201,11 @@ class RODSConn
             // get response
             $msg = new RODSMessage();
             $intInfo = $msg->unpack($conn);
+            if ($intInfo < 0) {
+                $this->disconnect();
+                throw new RODSException('Cannot set session ticket.',
+                    $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+            }
         }
 
         // find zone for user, if not specified

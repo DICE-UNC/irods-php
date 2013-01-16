@@ -50,12 +50,12 @@ class ProdsFile extends ProdsPath
      */
     public static function fromURI($path, $verify = false)
     {
-        if (0 != strncmp($path, "rods://", 7))
+        if (0 != strncmp($path, "rods://", 7) && 0 != strncmp($path, "rods+ticket://", 14))
             $path = "rods://" . $path;
         $url = parse_url($path);
 
-        $host = isset($url['host']) ? $url['host'] : '';
-        $port = isset($url['port']) ? $url['port'] : '';
+        $host = isset($url['host']) ? $url['host'] : 'localhost';
+        $port = isset($url['port']) ? $url['port'] : '1247';
 
         $user = '';
         $zone = '';
@@ -68,7 +68,14 @@ class ProdsFile extends ProdsPath
 
         $pass = isset($url['pass']) ? $url['pass'] : '';
 
-        $account = new RODSAccount($host, $port, $user, $pass, $zone);
+        if( $url['scheme'] == 'rods+ticket' ) {
+            $pos = strrpos($url['user'], '#');
+            $user = substr($url['user'], 0, $pos);
+            $ticket = substr($url['user'], $pos+1);
+        } else
+            $ticket = '';
+
+        $account = new RODSAccount($host, $port, $user, $pass, $zone, '', $ticket);
 
         $path_str = isset($url['path']) ? $url['path'] : '';
 

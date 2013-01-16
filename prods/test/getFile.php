@@ -21,9 +21,9 @@ try {
 
     //read and print out the file
     $myfile->open("r");
-    while($str=$myfile->read(4096))
+    //while($str=$myfile->read(4096))
     //$str=file_get_contents("rods://rods:rods@localhost:1247/tempZone/home/rods/testphoto.png");
-    //$str = file_get_contents("rods://rods:rods@localhost:1247/tempZone/home/rods/phrases.html");
+    $str = file_get_contents("rods+ticket://a#RpO7kyGvh40egRz:a@localhost:1247/tempZone/home/rods/phrases.html");
     echo $str;
     //close the file pointer
     $myfile->close();

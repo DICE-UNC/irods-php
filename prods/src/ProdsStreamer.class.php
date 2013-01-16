@@ -276,4 +276,6 @@ class ProdsStreamer
 
 stream_wrapper_register('rods', 'ProdsStreamer')
     or die ('Failed to register protocol:rods');
+stream_wrapper_register('rods+ticket', 'ProdsStreamer')
+    or die ('Failed to register protocol:rods');
 ?>
