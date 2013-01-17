@@ -108,7 +108,8 @@ class RODSAccount
                                 $rel_cb = array('RODSConnManager', 'releaseConn'))
     {
         //$conn = RODSConnManager::getConn($this);
-        $conn = call_user_func($get_cb, $this);
+        $conn = call_user_func_array($get_cb, array(&$this));
+        //TODO: Overcome fear of passing $this by reference or stop passing $this by reference
         $userinfo = $conn->getUserInfo($username);
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);
@@ -125,7 +126,8 @@ class RODSAccount
                                     $rel_cb = array('RODSConnManager', 'releaseConn'))
     {
         //$conn = RODSConnManager::getConn($this);
-        $conn = call_user_func($get_cb, $this);
+        $conn = call_user_func_array($get_cb, array(&$this));
+        //TODO: Overcome fear of passing $this by reference or stop passing $this by reference
         $temppass = $conn->getTempPassword();
         // RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);

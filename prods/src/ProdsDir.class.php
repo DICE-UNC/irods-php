@@ -93,7 +93,7 @@ class ProdsDir extends ProdsPath
                               $rel_cb = array('RODSConnManager', 'releaseConn'))
     {
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $this->path_exists = $conn->dirExists($this->path_str);
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);
@@ -179,7 +179,7 @@ class ProdsDir extends ProdsPath
                           $rel_cb = array('RODSConnManager', 'releaseConn'))
     {
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $conn->mkdir($this->path_str . "/$name");
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);
@@ -206,7 +206,7 @@ class ProdsDir extends ProdsPath
                           $rel_cb = array('RODSConnManager', 'releaseConn'))
     {
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $conn->rmdir($this->path_str, $recursive, $force, $additional_flags,
             $status_update_func);
         // RODSConnManager::releaseConn($conn);
@@ -227,7 +227,7 @@ class ProdsDir extends ProdsPath
             return $this->stats;
 
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $stats = $conn->getDirStats($this->path_str);
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);
@@ -277,7 +277,7 @@ class ProdsDir extends ProdsPath
         }
 
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $results = $conn->query($select, $condition);
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);
@@ -487,7 +487,7 @@ class ProdsDir extends ProdsPath
         }
 
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $results = $conn->query($select, $condition, $start, $limit);
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);

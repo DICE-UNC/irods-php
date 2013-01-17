@@ -95,7 +95,7 @@ abstract class ProdsPath
                 throw new RODSException("Unsupported data type:" . get_class($this),
                     "PERR_INTERNAL_ERR");
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $meta_array = $conn->getMeta($type, $this->path_str);
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);
@@ -129,7 +129,7 @@ abstract class ProdsPath
                     "PERR_INTERNAL_ERR");
 
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $conn->addMeta($type, $this->path_str, $meta);
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);
@@ -153,7 +153,7 @@ abstract class ProdsPath
                     "PERR_INTERNAL_ERR");
 
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $conn->rmMeta($type, $this->path_str, $meta);
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);
@@ -178,7 +178,7 @@ abstract class ProdsPath
                     "PERR_INTERNAL_ERR");
 
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $conn->rmMetaByID($type, $this->path_str, $metaid);
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);
@@ -211,7 +211,7 @@ abstract class ProdsPath
                     "PERR_INTERNAL_ERR");
 
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $conn->cpMeta($type_src, $type_dest, $this->path_str, $dest->path_str);
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);
@@ -231,7 +231,7 @@ abstract class ProdsPath
         else
             $type = 1;
         //$conn = RODSConnManager::getConn($this->account);
-        $conn = call_user_func($get_cb, $this->account);
+        $conn = call_user_func_array($get_cb, array(&$this->account));
         $conn->rename($this->path_str, $new_path_str, $type);
         //RODSConnManager::releaseConn($conn);
         call_user_func($rel_cb, $conn);
