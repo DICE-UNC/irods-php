@@ -83,7 +83,7 @@ class RODSAccount
 
     public function getSignature()
     {
-        return (bin2hex(md5("$this->user.$this->zone:this->pass@$this->host:$this->port", TRUE)));
+        return (bin2hex(md5("$this->user.$this->zone:this->pass@$this->host:$this->port.$this->ticket", TRUE)));
     }
 
     public function __toString()
