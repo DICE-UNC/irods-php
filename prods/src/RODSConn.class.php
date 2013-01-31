@@ -230,6 +230,54 @@ class RODSConn
         $this->connected = false;
     }
 
+    public function createTicket( $object, $permission = 'read', $ticket = '' )
+    {
+        if ($this->connected === false) {
+            throw new RODSException("createTicket needs an active connection, but the connection is currently inactive",
+                'PERR_CONN_NOT_ACTIVE');
+        }
+        if( empty($ticket) )
+        {
+            // create a 16 characters long ticket
+            $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            for ($i = 0; $i < 16; $i++)
+                $ticket .= $chars[mt_rand(1, strlen($chars))-1];
+        }
+
+        $ticket_packet = new RP_ticketAdminInp('create', $ticket, $permission, $object);
+        $msg = new RODSMessage('RODS_API_REQ_T', $ticket_packet, 723);
+        fwrite($this->conn, $msg->pack());
+
+        // get response
+        $msg = new RODSMessage();
+        $intInfo = $msg->unpack($this->conn);
+        if ($intInfo < 0) {
+            throw new RODSException('Cannot create ticket "'.$ticket.'" for object "'.$object.'" with permission "'.$permission.'".',
+                $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+        }
+
+        return $ticket;
+    }
+
+    public function deleteTicket( $ticket )
+    {
+        if ($this->connected === false) {
+            throw new RODSException("deleteTicket needs an active connection, but the connection is currently inactive",
+                'PERR_CONN_NOT_ACTIVE');
+        }
+        $ticket_packet = new RP_ticketAdminInp('delete', $ticket);
+        $msg = new RODSMessage('RODS_API_REQ_T', $ticket_packet, 723);
+        fwrite($this->conn, $msg->pack());
+
+        // get response
+        $msg = new RODSMessage();
+        $intInfo = $msg->unpack($this->conn);
+        if ($intInfo < 0) {
+            throw new RODSException('Cannot delete ticket "'.$ticket.'".',
+                $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+        }
+    }
+
     /**
      * Get a temp password from the server.
      * @param string $key key obtained from server to generate password. If this key is not specified, this function will ask server for a new key.

@@ -25,7 +25,7 @@ class RODSConnManager
         $this->conn_map = array();
     }
 
-    public static function getConn(RODSAccount &$account)
+    public static function getConn(RODSAccount $account)
     {
         $manager = $GLOBALS['RODSConnManager'];
 

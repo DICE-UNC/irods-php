@@ -367,14 +367,14 @@ class ProdsDirTest extends PHPUnit_Framework_TestCase {
         $terms = array("descendantOnly" => true, "recursive" => false, "logicalFile" => false);
         $total_count = -1;
 
-        $stats = $prods_dir_stub->findFiles($terms, &$total_count, 0, -1, array("name"),
+        $stats = $prods_dir_stub->findFiles($terms, $total_count, 0, -1, array("name"),
                                            array('stubRODSConnManager', 'getConn'),
                                            array('stubRODSConnManager', 'releaseConn'));
         // check total count return
         $this->assertEquals(1, $total_count);
 
         // test limiting number of results to 0
-        $prods_dir_stub->findFiles($terms, &$total_count, 0, 0, array(),
+        $prods_dir_stub->findFiles($terms, $total_count, 0, 0, array(),
                                            array('stubRODSConnManager', 'getConn'),
                                            array('stubRODSConnManager', 'releaseConn'));
         $this->assertEquals(0, $total_count);
@@ -389,7 +389,7 @@ class ProdsDirTest extends PHPUnit_Framework_TestCase {
         // 'owner'          (string)  - owner name of the file
         // 'rescname'       (string)  - resource name of the file
         $terms = array("name" => "test");
-        $prods_dir_stub->findFiles($terms, &$total_count, 0, -1, array(),
+        $prods_dir_stub->findFiles($terms, $total_count, 0, -1, array(),
                                            array('stubRODSConnManager', 'getConn'),
                                            array('stubRODSConnManager', 'releaseConn'));
         $params_array = stubRODSConn::getParams();
@@ -427,12 +427,12 @@ class ProdsDirTest extends PHPUnit_Framework_TestCase {
 
 class stubFindDirs extends ProdsDir
 {
-  public function __construct(RODSAccount &$account, $path_str, $verify=false,
+  public function __construct(RODSAccount $account, $path_str, $verify=false,
     RODSDirStats $stats=NULL) {
              parent::__construct($account, $path_str, $verify, $stats);
   }
 
-  public function findDirs(array $terms, &$total_count, $start=0, $limit=-1,
+  public function findDirs(array $terms, $total_count, $start=0, $limit=-1,
     array $sort_flds=array()) {
         return $sort_flds;
 
