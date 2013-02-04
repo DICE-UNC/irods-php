@@ -236,6 +236,35 @@ class ProdsDir extends ProdsPath
         else $this->stats = $stats;
         return $this->stats;
     }
+    
+    public function getACL()
+    {
+
+        $collection = $this->path_str;
+
+        $cond = array(
+            new RODSQueryCondition("COL_COLL_NAME", $collection));
+
+        $connLocal = RODSConnManager::getConn($this->account);
+        $que_result = $connLocal->genQuery(
+              array("COL_COLL_INHERITANCE", "COL_COLL_NAME", "COL_D_OWNER_NAME",
+                  "COL_USER_NAME", "COL_USER_ZONE", "COL_DATA_ACCESS_NAME"),
+            $cond, array());
+        RODSConnManager::releaseConn($connLocal);
+        if ($que_result === false) return false;
+
+        for($i=0; $i < sizeof($que_result['COL_USER_NAME']); $i++) {
+            $users['COL_USERS'][] = (object) array(
+                "COL_USER_NAME" => $que_result['COL_USER_NAME'][$i],
+                "COL_USER_ZONE" => $que_result['COL_USER_ZONE'][$i],
+                "COL_DATA_ACCESS_NAME" => $que_result['COL_DATA_ACCESS_NAME'][$i]
+            );
+        }
+        
+        
+        $users['COL_COLL_INHERITANCE'] = (int)($que_result['COL_COLL_INHERITANCE'][0]);
+        return $users;
+    }
 
     /**
      * get the dir statistics, such as total number of files under this dir

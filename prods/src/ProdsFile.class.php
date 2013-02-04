@@ -387,6 +387,41 @@ class ProdsFile extends ProdsPath
         }
         return $ret_arr;
     }
+    
+        /**
+     * Get ACL (users and their rights on a file)
+     * @param string $filepath input file path string
+     * @return RODSFileStats. If file does not exists, return fales.
+     */
+    public function getACL()
+    {
+
+        $filepath = $this->path_str;
+        $parent = dirname($filepath);
+        $filename = basename($filepath);
+
+//        $cond = array(new RODSQueryCondition("COL_COLL_NAME", $parent),
+//            new RODSQueryCondition("COL_DATA_NAME", $filename));
+        $cond = array(new RODSQueryCondition("COL_DATA_NAME", $filename),
+            new RODSQueryCondition("COL_COLL_NAME", $parent));
+
+        $connLocal = RODSConnManager::getConn($this->account);
+        $que_result = $connLocal->genQuery(
+              array("COL_USER_NAME", "COL_USER_ZONE", "COL_DATA_ACCESS_NAME"),
+            $cond, array());
+        RODSConnManager::releaseConn($connLocal);
+        if ($que_result === false) return false;
+
+
+        for($i=0; $i < sizeof($que_result['COL_USER_NAME']); $i++) {
+            $users[] = (object) array(
+                "COL_USER_NAME" => $que_result['COL_USER_NAME'][$i],
+                "COL_USER_ZONE" => $que_result['COL_USER_ZONE'][$i],
+                "COL_DATA_ACCESS_NAME" => $que_result['COL_DATA_ACCESS_NAME'][$i]
+            );
+        }
+        return $users;
+    }
 }   
     
     
