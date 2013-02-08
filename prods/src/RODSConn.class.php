@@ -186,7 +186,7 @@ class RODSConn
         $intInfo = $msg->unpack($conn);
         if ($intInfo < 0) {
             $this->disconnect();
-            throw new RODSException("Connection to '$host:$port' failed.4 (login failed, possible wrong user/passwd). User: $user Pass: $pass Zone: $zone",
+            throw new RODSException("Connection to '$host:$port' failed.4 (login failed, possible wrong user/passwd). User: $user Zone: $zone",
                 $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
         }
 
