@@ -1,6 +1,6 @@
 *'''Project''': iRODS PHP Library PRODS and PRODS Web Browser
 *'''Date''': 
-*'''Release Version''': 3.2.1 SNAPSHOT
+*'''Release Version''': 3.3.0 SNAPSHOT
 *'''git tag''':  
 
 ==News==
