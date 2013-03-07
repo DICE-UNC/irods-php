@@ -242,28 +242,33 @@ class ProdsDir extends ProdsPath
 
         $collection = $this->path_str;
 
-        $cond = array(
-            new RODSQueryCondition("COL_COLL_NAME", $collection));
-
         $connLocal = RODSConnManager::getConn($this->account);
-        $que_result = $connLocal->genQuery(
-              array("COL_COLL_INHERITANCE", "COL_COLL_NAME", "COL_D_OWNER_NAME",
-                  "COL_USER_NAME", "COL_USER_ZONE", "COL_DATA_ACCESS_NAME"),
-            $cond, array());
-        RODSConnManager::releaseConn($connLocal);
-        if ($que_result === false) return false;
+        $que_result_coll = $connLocal->genQuery(
+            array("COL_COLL_INHERITANCE", "COL_COLL_NAME", "COL_COLL_OWNER_NAME", "COL_COLL_ID"),
+            array(new RODSQueryCondition("COL_COLL_NAME", $collection)));
+        
+        $users['COL_COLL_INHERITANCE'] = (int)($que_result_coll['COL_COLL_INHERITANCE'][0]);
 
-        for($i=0; $i < sizeof($que_result['COL_USER_NAME']); $i++) {
+        $que_result_users = $connLocal->genQuery(
+            array("COL_DATA_ACCESS_NAME", "COL_DATA_ACCESS_USER_ID"),
+            array(new RODSQueryCondition("COL_DATA_ACCESS_DATA_ID", $que_result_coll['COL_COLL_ID'][0])));
+        
+        for($i=0; $i<sizeof($que_result_users["COL_DATA_ACCESS_USER_ID"]);$i++) {
+            $que_result_user_info = $connLocal->genQuery(
+                array("COL_USER_NAME", "COL_USER_ZONE"),
+                array(new RODSQueryCondition("COL_USER_ID", $que_result_users["COL_DATA_ACCESS_USER_ID"][$i])));
+            
             $users['COL_USERS'][] = (object) array(
-                "COL_USER_NAME" => $que_result['COL_USER_NAME'][$i],
-                "COL_USER_ZONE" => $que_result['COL_USER_ZONE'][$i],
-                "COL_DATA_ACCESS_NAME" => $que_result['COL_DATA_ACCESS_NAME'][$i]
+                "COL_USER_NAME" => $que_result_user_info['COL_USER_NAME'][0],
+                "COL_USER_ZONE" => $que_result_user_info['COL_USER_ZONE'][0],
+                "COL_DATA_ACCESS_NAME" => $que_result_users['COL_DATA_ACCESS_NAME'][$i]
             );
         }
         
-        
-        $users['COL_COLL_INHERITANCE'] = (int)($que_result['COL_COLL_INHERITANCE'][0]);
+        RODSConnManager::releaseConn($connLocal);
         return $users;
+        
+
     }
 
     /**
