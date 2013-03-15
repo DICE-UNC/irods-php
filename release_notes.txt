@@ -1,6 +1,6 @@
 *'''Project''': iRODS PHP Library PRODS and PRODS Web Browser
 *'''Date''': 
-*'''Release Version''': 3.3.0 SNAPSHOT
+*'''Release Version''': 1280-branch for PAM integration
 *'''git tag''':  
 
 ==News==
@@ -17,5 +17,7 @@ Note that the git repository is now the canonical version of the PHP code.  The 
 ==Libraries==
 
 ==Features==
+
+*[#1280] Add PAM support to PHP
 
 ==Bug Fixes==
