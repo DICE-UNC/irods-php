@@ -20,11 +20,12 @@ class RODSAccount
   public $host;
   public $port;
   public $zone; 
-  public $default_resc;  
+  public $default_resc;
+  public $auth_type;
   /**#@-*/
   
   public function __construct($host, $port, $user, $pass, $zone="", 
-    $default_resc="")
+    $default_resc="", $auth_type="irods")
   {
     $this->host=$host;
     $this->port=$port;
@@ -32,6 +33,7 @@ class RODSAccount
     $this->pass=$pass;
     $this->zone=$zone;
     $this->default_resc=$default_resc;
+    $this->auth_type=$auth_type;
   }
   
  /**
