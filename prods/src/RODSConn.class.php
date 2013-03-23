@@ -95,8 +95,20 @@ class RODSConn
     $user=$this->account->user;
     $pass=$this->account->pass;
     $zone=$this->account->zone;
-    
-    $conn = @fsockopen($host, $port, $errno, $errstr);
+    $auth_type = $this->account->auth_type;
+
+    // if we're going to use PAM, set up the socket context 
+    // options for SSL connections when we open the connection
+    if (strcasecmp($auth_type, "PAM") == 0) {
+      $ssl_opts = array('ssl' => array('verify_peer' => FALSE,));
+      $ssl_ctx = stream_context_get_default($ssl_opts);
+      $sock_timeout = ini_get("default_socket_timeout");
+      $conn = @stream_socket_client("tcp://$host:$port", $errno, $errstr,
+        $sock_timeout, STREAM_CLIENT_CONNECT, $ssl_ctx);
+    }
+    else {
+      $conn = @fsockopen($host, $port, $errno, $errstr);
+    }
     if (!$conn)
       throw new RODSException("Connection to '$host:$port' failed.1: ($errno)$errstr. ",
         "SYS_SOCK_OPEN_ERR");
@@ -114,40 +126,67 @@ class RODSConn
         $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
     }
     
-    /*
-    // get RODS zone name if it's empty, and attempt to use it as user zone.
-    if (empty($zone))
+    // are we doing PAM authentication
+    if (strcasecmp($auth_type, "PAM") == 0) 
     {
-       // request misc server infor
-      $msg=new RODSMessage("RODS_API_REQ_T",NULL,
-        $GLOBALS['PRODS_API_NUMS']['GET_MISC_SVR_INFO_AN']);
+      // Ask server to turn on SSL
+      //$req_packet = new RP_sslStartInp();
+      //$msg=new RODSMessage("RODS_API_REQ_T", $req_packet, 
+      //   $GLOBALS['PRODS_API_NUMS']['SSL_START_AN']);
+      //$payload=$msg->pack();
+      //$arr=unpack("Nlen/amsg", $payload);
+      //fwrite($conn, $payload);
+      //$msg=new RODSMessage();
+      //$intInfo=$msg->unpack($conn);
+      //if ($intInfo<0) 
+      //{
+      //  throw new RODSException("Connection to '$host:$port' failed.ssl1. User: $user Zone: $zone",
+      //    $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+      //}
+
+      // Turn on SSL on our side
+      //if (!stream_socket_enable_crypto($conn, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+      //  throw new RODSException("Error turning on SSL on connection to server '$host:$port'.");
+      //}
+
+      // all good ... do the PAM authentication over the encrypted connection
+      $req_packet = new RP_pamAuthRequestInp($user, $pass, -1);
+      $msg=new RODSMessage("RODS_API_REQ_T", $req_packet,
+        $GLOBALS['PRODS_API_NUMS']['PAM_AUTH_REQUEST_AN']);
       fwrite($conn, $msg->pack());
-      
-      // get zonename
       $msg=new RODSMessage();
       $intInfo=$msg->unpack($conn);
       if ($intInfo<0)
       {
-        throw new RODSException("Connection to '$host:$port' failed.1.5. User: $user Zone: $zone",
+        throw new RODSException("PAM auth failed at server '$host:$port' User: $user Zone: $zone",
           $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
       }
-      $pack=$msg->getBody();
-      $zone=$pack->rodsZone;
-      if (empty($zone))
-      {
-        throw new RODSException("Connection to '$host:$port' failed.1.6. User: $user Failed to get zone name",
-          $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
-      }  
-      $this->account->zone=$zone;
-    
-      //re-connect to RODS server
-      $this->disconnect(true);
-      $this->connect();
-      return;
       
+      // Update the account object with the temporary password
+      // and set the auth_type to irods for this connection
+      $pack = $msg->getBody();
+      $pass = $this->account->pass = $pack->irodsPamPassword;
+
+      // Done authentication ... turn ask the server to turn off SSL
+      //$req_packet = new RP_sslEndInp();
+      //$msg=new RODSMessage("RODS_API_REQ_T", $req_packet, 
+      //  $GLOBALS['PRODS_API_NUMS']['SSL_END_AN']);
+      //fwrite($conn, $msg->pack());
+      //$msg=new RODSMessage();
+      //$intInfo=$msg->unpack($conn);
+      //if ($intInfo<0) 
+      //{
+      //  throw new RODSException("Connection to '$host:$port' failed.ssl2. User: $user Zone: $zone",
+      //    $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+      //}
+
+      // De-activate SSL on the connection
+      //if (!stream_socket_enable_crypto($conn, false)) {
+      //  throw new RODSException("Error turning off SSL on connection to server '$host:$port'.");
+      //}
+
     }
-    */
-    
+      
     // request authentication
     $msg=new RODSMessage("RODS_API_REQ_T",NULL,
       $GLOBALS['PRODS_API_NUMS']['AUTH_REQUEST_AN']);
