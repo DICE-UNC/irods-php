@@ -130,24 +130,21 @@ class RODSConn
     if (strcasecmp($auth_type, "PAM") == 0) 
     {
       // Ask server to turn on SSL
-      //$req_packet = new RP_sslStartInp();
-      //$msg=new RODSMessage("RODS_API_REQ_T", $req_packet, 
-      //   $GLOBALS['PRODS_API_NUMS']['SSL_START_AN']);
-      //$payload=$msg->pack();
-      //$arr=unpack("Nlen/amsg", $payload);
-      //fwrite($conn, $payload);
-      //$msg=new RODSMessage();
-      //$intInfo=$msg->unpack($conn);
-      //if ($intInfo<0) 
-      //{
-      //  throw new RODSException("Connection to '$host:$port' failed.ssl1. User: $user Zone: $zone",
-      //    $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
-      //}
-
+      $req_packet = new RP_sslStartInp();
+      $msg=new RODSMessage("RODS_API_REQ_T", $req_packet, 
+        $GLOBALS['PRODS_API_NUMS']['SSL_START_AN']);
+      fwrite($conn, $msg->pack());
+      $msg=new RODSMessage();
+      $intInfo=$msg->unpack($conn);
+      if ($intInfo<0) 
+      {
+        throw new RODSException("Connection to '$host:$port' failed.ssl1. User: $user Zone: $zone",
+          $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+      }
       // Turn on SSL on our side
-      //if (!stream_socket_enable_crypto($conn, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
-      //  throw new RODSException("Error turning on SSL on connection to server '$host:$port'.");
-      //}
+      if (!stream_socket_enable_crypto($conn, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+        throw new RODSException("Error turning on SSL on connection to server '$host:$port'.");
+      }
 
       // all good ... do the PAM authentication over the encrypted connection
       $req_packet = new RP_pamAuthRequestInp($user, $pass, -1);
@@ -168,22 +165,29 @@ class RODSConn
       $pass = $this->account->pass = $pack->irodsPamPassword;
 
       // Done authentication ... turn ask the server to turn off SSL
-      //$req_packet = new RP_sslEndInp();
-      //$msg=new RODSMessage("RODS_API_REQ_T", $req_packet, 
-      //  $GLOBALS['PRODS_API_NUMS']['SSL_END_AN']);
-      //fwrite($conn, $msg->pack());
-      //$msg=new RODSMessage();
-      //$intInfo=$msg->unpack($conn);
-      //if ($intInfo<0) 
-      //{
-      //  throw new RODSException("Connection to '$host:$port' failed.ssl2. User: $user Zone: $zone",
-      //    $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
-      //}
-
+      $req_packet = new RP_sslEndInp();
+      $msg=new RODSMessage("RODS_API_REQ_T", $req_packet, 
+        $GLOBALS['PRODS_API_NUMS']['SSL_END_AN']);
+      fwrite($conn, $msg->pack());
+      $msg=new RODSMessage();
+      $intInfo=$msg->unpack($conn);
+      if ($intInfo<0) 
+      {
+        throw new RODSException("Connection to '$host:$port' failed.ssl2. User: $user Zone: $zone",
+          $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+      }
       // De-activate SSL on the connection
-      //if (!stream_socket_enable_crypto($conn, false)) {
-      //  throw new RODSException("Error turning off SSL on connection to server '$host:$port'.");
-      //}
+      stream_socket_enable_crypto($conn, false);
+
+      // nasty hack ... some characters are left over to be read
+      // from the socket after the SSL shutdown, and I can't 
+      // figure out how to consume them via SSL routines, so I
+      // just read them and throw them away. They need to be consumed
+      // or later reads get out of sync with the API responses
+      $r = array($conn);
+      while (stream_select($r, $w = null, $e = null, 0) > 0) {
+        $s = fread($conn, 1);
+      }
 
     }
       
