@@ -100,7 +100,26 @@ class RODSConn
     // if we're going to use PAM, set up the socket context 
     // options for SSL connections when we open the connection
     if (strcasecmp($auth_type, "PAM") == 0) {
-      $ssl_opts = array('ssl' => array('verify_peer' => FALSE,));
+      $ssl_opts = array('ssl' => array());
+      if (array_key_exists('ssl', $GLOBALS['PRODS_CONFIG'])) {
+        $ssl_conf = $GLOBALS['PRODS_CONFIG']['ssl'];
+        if (array_key_exists('verify_peer', $ssl_conf)) {
+          if (strcasecmp("true", $ssl_conf['verify_peer']) == 0) {
+            $ssl_opts['ssl']['verify_peer'] = true;
+          }
+        }
+        if (array_key_exists('allow_self_signed', $ssl_conf)) {
+          if (strcasecmp("true", $ssl_conf['allow_self_signed']) == 0) {
+            $ssl_opts['ssl']['allow_self_signed'] = true;
+          }
+        }
+        if (array_key_exists('cafile', $ssl_conf)) {
+          $ssl_opts['ssl']['cafile'] = $ssl_conf['cafile'];
+        }
+        if (array_key_exists('capath', $ssl_conf)) {
+          $ssl_opts['ssl']['capath'] = $ssl_conf['capath'];
+        }
+      }
       $ssl_ctx = stream_context_get_default($ssl_opts);
       $sock_timeout = ini_get("default_socket_timeout");
       $conn = @stream_socket_client("tcp://$host:$port", $errno, $errstr,
