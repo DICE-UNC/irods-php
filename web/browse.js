@@ -2141,7 +2141,7 @@ function RodsBrowser(inipath, _ssid)
                       }
                   }),
                   new Ext.menu.Item({ 
-                    text: 'Advance Search',
+                    text: 'Advanced Search',
                     scope: this,
                     handler: function (evnt){
                       var partial_name=Ext.util.Format.trim(this.getRawValue());

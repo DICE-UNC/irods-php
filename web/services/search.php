@@ -61,8 +61,14 @@ if ( (isset($_REQUEST['metadata'])) && (strlen($_REQUEST['metadata'])>0) )
   $options['metadata']=array();
   foreach($metadata_arr as $meta)
   {
-    $options['metadata'][]=new RODSMeta(
-      $meta['name'],'%'.$meta['val'].'%',NULL,NULL,$meta['op']);
+    if (is_numeric($meta['val'])) {
+        $options['metadata'][]=new RODSMeta(
+            $meta['name'],$meta['val'],NULL,NULL,$meta['op']);
+    }
+    else {
+        $options['metadata'][]=new RODSMeta(
+            $meta['name'],'%'.$meta['val'].'%',NULL,NULL,$meta['op']);
+    }
   }
 } 
 
