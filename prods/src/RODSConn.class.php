@@ -204,7 +204,8 @@ class RODSConn
       // just read them and throw them away. They need to be consumed
       // or later reads get out of sync with the API responses
       $r = array($conn);
-      while (stream_select($r, $w = null, $e = null, 0) > 0) {
+      $w = $e = null;
+      while (stream_select($r, $w, $e, 0) > 0) {
         $s = fread($conn, 1);
       }
 
