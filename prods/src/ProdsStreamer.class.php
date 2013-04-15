@@ -12,11 +12,11 @@ require_once("autoload.inc.php");
 class ProdsStreamer
 {
  /**
-	* current postion of the file or dir
+	* current position of the file or dir
 	*
 	* @access private
 	*/
-  private $postion;
+  private $position;
   
   /**
 	 * Name of the directory/collection specified in the URI to opendir().
@@ -122,7 +122,7 @@ class ProdsStreamer
 	 * @access private
 	 */
 	public function stream_read ($count) {
-		if (in_array ($this->file->getOpenMode, array ('w', 'a', 'x'))) {
+		if (in_array ($this->file->getOpenMode(), array ('w', 'a', 'x'))) {
 			return false;
 		}
 		try {
@@ -141,11 +141,11 @@ class ProdsStreamer
 	 * @access private
 	 */
 	public function stream_write ($data) {
-		if ($this->_mode =='r') {
+		if ($this->file->getOpenMode() =='r') {
 			return false;
 		}
 		try {
-  		$ret = $this->file->write($date);
+  		$ret = $this->file->write($data);
   		$this->position=$this->file->tell();
   		return $ret;
   	} catch (Exception $e) {
