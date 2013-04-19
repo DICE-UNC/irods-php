@@ -130,6 +130,30 @@ class ProdsStreamer
 		}
 	}
 
+	/**
+	 * rename() handler.
+	 *
+	 * @access private
+	 */
+        function rename ($url_from, $url_to) {
+                try {
+                  $file_from=ProdsDir::fromURI($url_from);
+                  $file_to=ProdsDir::fromURI($url_to);
+                  $conn = RODSConnManager::getConn($file_from->account);
+
+                  if (is_dir($url_from)) {
+                    $conn->rename($file_from->path_str, $file_to->path_str, 0);
+                  } else {
+                    $conn->rename($file_from->path_str, $file_to->path_str, 1);
+                  }
+
+                  RODSConnManager::releaseConn($conn);
+                  return true;
+                } catch (Exception $e) {
+                  trigger_error("Got an exception:$e", E_USER_WARNING);
+                  return false;
+                }
+        }
 
 	/**
 	 * opendir() handler.
