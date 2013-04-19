@@ -34,6 +34,104 @@ class ProdsStreamer
 
 	
 	/**
+	 * url_stat() handler.
+	 *
+	 * @access private
+	 */
+	public function url_stat($path)
+	{
+		try {
+                  $file=ProdsDir::fromURI($path);
+                  $conn = RODSConnManager::getConn($file->account);
+
+                  $stats = array();
+
+                  $irods_stats = $conn->getFileStats($file->path_str);
+                  if ($irods_stats) {
+                    $stats[2] = $stats['mode'] = octdec('100644');
+                    $stats[7] = $stats['size'] = $irods_stats->size;
+                  } else {
+                    $irods_stats = $conn->getDirStats($file->path_str);
+                    if ($irods_stats) {
+                      $stats[2] = $stats['mode'] = octdec('040755');
+                      $stats[7] = $stats['size'] = 0;
+                    }
+                  }
+                  
+                  RODSConnManager::releaseConn($conn);
+                  
+                  // neither file nor folder exist -> return false
+                  if (!$irods_stats) {
+                    return false;
+                  }
+
+                  // set some reasonable values since most of these
+                  // values are not meaningful in iRODS
+                  $stats[0] = $stats['dev'] = 0;
+                  $stats[1] = $stats['ino'] = 0;
+                  $stats[3] = $stats['nlink'] = 1;
+                  $stats[4] = $stats['uid'] = 0;
+                  $stats[5] = $stats['gid'] = 0;
+                  $stats[6] = $stats['rdev'] = -1;
+                  $stats[8] = $stats['atime'] = time();
+                  $stats[9] = $stats['mtime'] = $irods_stats->mtime;
+                  $stats[10] = $stats['ctime'] = $irods_stats->ctime;
+                  $stats[11] = $stats['blksize'] = -1;
+                  $stats[12] = $stats['blocks'] = -1;
+                  
+                  
+                  return $stats;
+                  
+		} catch (Exception $e) {
+                  trigger_error("Got an exception:$e", E_USER_WARNING);
+                  return false;
+		}
+	}
+
+	/**
+	 * mkdir() handler.
+	 *
+	 * @access private
+	 */
+	function mkdir ($url, $mode, $options) {
+		try {
+                  $file=ProdsDir::fromURI($url);
+                  $conn = RODSConnManager::getConn($file->account);
+                  $conn->mkdir($file->path_str);
+                  
+                  RODSConnManager::releaseConn($conn);
+                  return true;
+		} catch (Exception $e) {
+                  trigger_error("Got an exception:$e", E_USER_WARNING);
+                  return false;
+		}
+	}
+
+	/**
+	 * unlink() handler.
+	 *
+	 * @access private
+	 */
+	function unlink ($url) {
+		try {
+                  $file=ProdsDir::fromURI($url);
+                  $conn = RODSConnManager::getConn($file->account);
+                  if (is_dir($url)) {
+                    $conn->rmdir($file->path_str, true, true);
+                  } else {
+                    $conn->fileUnlink($file->path_str, NULL, true);
+                  }
+                  
+                  RODSConnManager::releaseConn($conn);
+                  return true;
+		} catch (Exception $e) {
+                  trigger_error("Got an exception:$e", E_USER_WARNING);
+                  return false;
+		}
+	}
+
+
+	/**
 	 * opendir() handler.
 	 *
 	 * @access private
@@ -205,22 +303,7 @@ class ProdsStreamer
   		);
 	  } catch (Exception $e) {
 		  trigger_error("Got an exception:$e", E_USER_WARNING);
-		  return array (
-  			-1, -1, -1, -1, -1, -1, -1, time (), time (), time (), -1, -1,
-  			'dev' => -1,
-  			'ino' => -1,
-  			'mode' => -1,
-  			'nlink' => -1,
-  			'uid' => -1,
-  			'gid' => -1,
-  			'rdev' => -1,
-  			'size' => -1,
-  			'atime' => time (),
-  			'mtime' => time (),
-  			'ctime' => time (),
-  			'blksize' => -1,
-  			'blocks' => -1,
-  		);
+		  return false;
 		} 
 	}
 
