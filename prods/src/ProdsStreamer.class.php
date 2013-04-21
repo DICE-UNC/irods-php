@@ -44,41 +44,12 @@ class ProdsStreamer
                   $file=ProdsDir::fromURI($path);
                   $conn = RODSConnManager::getConn($file->account);
 
-                  $stats = array();
-
-                  $irods_stats = $conn->getFileStats($file->path_str);
-                  if ($irods_stats) {
-                    $stats[2] = $stats['mode'] = octdec('100644');
-                    $stats[7] = $stats['size'] = $irods_stats->size;
-                  } else {
-                    $irods_stats = $conn->getDirStats($file->path_str);
-                    if ($irods_stats) {
-                      $stats[2] = $stats['mode'] = octdec('040755');
-                      $stats[7] = $stats['size'] = 0;
-                    }
+                  $stats = $this->stat_file($file->path_str);
+                  if (!$stats) {
+                    $stats = $this->stat_dir($file->path_str);
                   }
                   
                   RODSConnManager::releaseConn($conn);
-                  
-                  // neither file nor folder exist -> return false
-                  if (!$irods_stats) {
-                    return false;
-                  }
-
-                  // set some reasonable values since most of these
-                  // values are not meaningful in iRODS
-                  $stats[0] = $stats['dev'] = 0;
-                  $stats[1] = $stats['ino'] = 0;
-                  $stats[3] = $stats['nlink'] = 1;
-                  $stats[4] = $stats['uid'] = 0;
-                  $stats[5] = $stats['gid'] = 0;
-                  $stats[6] = $stats['rdev'] = -1;
-                  $stats[8] = $stats['atime'] = time();
-                  $stats[9] = $stats['mtime'] = $irods_stats->mtime;
-                  $stats[10] = $stats['ctime'] = $irods_stats->ctime;
-                  $stats[11] = $stats['blksize'] = -1;
-                  $stats[12] = $stats['blocks'] = -1;
-                  
                   
                   return $stats;
                   
@@ -88,6 +59,68 @@ class ProdsStreamer
 		}
 	}
 
+        /**
+         * @param $conn
+         * @param $file
+         * @return mixed
+         */
+        private function stat_dir($conn, $file) {
+                 try {
+                   $irods_stat = $conn->getDirStats($file->path_str);
+                   if (!$irods_stats)
+                     return false;
+                   $stats = array();
+                   $stats[0] = $stats['dev'] = 0;
+                   $stats[1] = $stats['ino'] = 0;
+                   $stats[2] = $stats['mode'] = octdec('040755');
+                   $stats[3] = $stats['nlink'] = 1;
+                   $stats[4] = $stats['uid'] = 0;
+                   $stats[5] = $stats['gid'] = 0;
+                   $stats[6] = $stats['rdev'] = -1;
+                   $stats[7] = $stats['size'] = 0;
+                   $stats[8] = $stats['atime'] = time();
+                   $stats[9] = $stats['mtime'] = $irods_stats->mtime;
+                   $stats[10] = $stats['ctime'] = $irods_stats->ctime;
+                   $stats[11] = $stats['blksize'] = -1;
+                   $stats[12] = $stats['blocks'] = -1;
+                   return $stats;
+                 } catch (Exception $e) {
+                   trigger_error("Got an exception: $e", E_USER_WARNING);
+                   return false;
+                 }
+        }
+                 
+        /**
+         * @param $conn
+         * @param $file
+         * @return mixed
+         */
+        private function stat_file($conn, $file) {
+                 try {
+                   $irods_stat = $conn->getFileStats($file->path_str);
+                   if (!$irods_stats)
+                     return false;
+                   $stats = array();
+                   $stats[0] = $stats['dev'] = 0;
+                   $stats[1] = $stats['ino'] = 0;
+                   $stats[2] = $stats['mode'] = octdec('100644');
+                   $stats[3] = $stats['nlink'] = 1;
+                   $stats[4] = $stats['uid'] = 0;
+                   $stats[5] = $stats['gid'] = 0;
+                   $stats[6] = $stats['rdev'] = -1;
+                   $stats[7] = $stats['size'] = $irods_stats->size;
+                   $stats[8] = $stats['atime'] = time();
+                   $stats[9] = $stats['mtime'] = $irods_stats->mtime;
+                   $stats[10] = $stats['ctime'] = $irods_stats->ctime;
+                   $stats[11] = $stats['blksize'] = -1;
+                   $stats[12] = $stats['blocks'] = -1;
+                   return $stats;
+                 } catch (Exception $e) {
+                   trigger_error("Got an exception: $e", E_USER_WARNING);
+                   return false;
+                 }
+        }
+                 
 	/**
 	 * mkdir() handler.
 	 *
