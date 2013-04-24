@@ -1,0 +1,30 @@
+
+*'''Project''': PHP Prods API for iRODS 
+*'''Date''': xx/xx/xxxx
+*'''Release Version''': 3.2.0 snapshot
+*'''git tag''': 
+
+==News==
+
+PHP API for iRODS
+
+
+GForge for iDrop-swing is at:  [[https://code.renci.org/gf/project/irodsphp/]]
+
+==Requirements==
+
+Note that the following bug and feature requests are logged in GForge with related commit information [[https://code.renci.org/gf/project/irodsphp/tracker/]]
+
+==Features==
+
+[#1280] Add PAM support to PHP
+
+==Bug Fixes==
+
+
+
+==Outstanding Issues==
+
+Please consult [[https://code.renci.org/gf/project/irodsphp/tracker/]]
+
+for the latest open bugs and Jargon feature requests
