@@ -50,17 +50,28 @@ class RODSAccount
     
     $user='';
     $zone='';
+    $authtype='irods';
     if (isset($url['user']))
     {
-      if (strstr($url['user'],".")!==false)
-        list($user,$zone)=@explode(".",$url['user']);
+      if (strstr($url['user'],".")!==false) {
+        $user_array=@explode(".",$url['user']);
+        if (count($user_array)===3) {
+          $user=$user_array[0];
+          $zone=$user_array[1];
+          $authtype=$user_array[2];
+        }
+        else {
+          $user=$user_array[0];
+          $zone=$user_array[1];
+        }
+      } 
       else
         $user=$url['user'];
     }  
     
     $pass=isset($url['pass'])?$url['pass']:'';
     
-    return (new RODSAccount($host, $port, $user, $pass, $zone));
+    return (new RODSAccount($host, $port, $user, $pass, $zone, "", $authtype));
   }
   
   public function equals(RODSAccount $other)
