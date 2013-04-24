@@ -44,9 +44,9 @@ class ProdsStreamer
                   $file=ProdsDir::fromURI($path);
                   $conn = RODSConnManager::getConn($file->account);
 
-                  $stats = $this->stat_file($file->path_str);
+                  $stats = $this->stat_file($conn, $file->path_str);
                   if (!$stats) {
-                    $stats = $this->stat_dir($file->path_str);
+                    $stats = $this->stat_dir($conn, $file->path_str);
                   }
                   
                   RODSConnManager::releaseConn($conn);
@@ -64,9 +64,9 @@ class ProdsStreamer
          * @param $file
          * @return mixed
          */
-        private function stat_dir($conn, $file) {
+        private function stat_dir($conn, $path_str) {
                  try {
-                   $irods_stat = $conn->getDirStats($file->path_str);
+                   $irods_stats = $conn->getDirStats($path_str);
                    if (!$irods_stats)
                      return false;
                    $stats = array();
@@ -95,9 +95,9 @@ class ProdsStreamer
          * @param $file
          * @return mixed
          */
-        private function stat_file($conn, $file) {
+        private function stat_file($conn, $path_str) {
                  try {
-                   $irods_stat = $conn->getFileStats($file->path_str);
+                   $irods_stats = $conn->getFileStats($path_str);
                    if (!$irods_stats)
                      return false;
                    $stats = array();
