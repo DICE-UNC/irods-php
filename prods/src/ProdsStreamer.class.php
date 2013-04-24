@@ -395,6 +395,7 @@ class ProdsStreamer
 	 * @access private
 	 */
 	function stream_close () {
+		$this->file->close();
 		$this->position = 0;
 		$this->file = null;
 		$this->dir = null;
