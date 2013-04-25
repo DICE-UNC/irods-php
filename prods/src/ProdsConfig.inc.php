@@ -1,11 +1,11 @@
 <?php
-  
+
 /**#@+
  * Constants
  */
 
-define("RODS_REL_VERSION",'rods1.1');
-define("RODS_API_VERSION",'d');
+define("RODS_REL_VERSION", 'rods1.1');
+define("RODS_API_VERSION", 'd');
 
 /**#@-*/
 
@@ -15,6 +15,5 @@ if (file_exists(__DIR__ . "/prods.ini")) {
 else {
   $GLOBALS['PRODS_CONFIG'] = array();
 }
-  
   
 ?>
