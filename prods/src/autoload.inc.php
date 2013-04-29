@@ -44,5 +44,4 @@ function classFolder($className, $sub = "/")
     return false;
 }
 
-?>
 spl_autoload_register('__autoload');
