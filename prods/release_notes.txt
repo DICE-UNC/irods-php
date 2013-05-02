@@ -1,8 +1,8 @@
 
 *'''Project''': PHP Prods API for iRODS 
 *'''Date''': 04/25/2013
-*'''Release Version''': 3.2.0 alpha1
-*'''git tag''': 3.2.0-alpha1
+*'''Release Version''': 3.2.1 alpha1
+*'''git tag''': php-3.2.1-alpha1
 
 ==News==
 

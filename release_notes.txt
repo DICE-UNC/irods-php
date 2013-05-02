@@ -1,7 +1,7 @@
 *'''Project''': iRODS PHP Library PRODS and PRODS Web Browser
 *'''Date''': 
-*'''Release Version''': 1280-branch for PAM integration
-*'''git tag''':  
+*'''Release Version''': 3.2.1-alpha1
+*'''git tag''':  php-3.2.1-alpha1
 
 ==News==
 
@@ -11,13 +11,4 @@ Please go to [[https://code.renci.org/gf/project/irodsphp/] for the latest news 
 
 Note that the git repository is now the canonical version of the PHP code.  The code in the iRODS SVN server is deprecated and will be taken down at the 3.0.0 release point.  There may be other versions in Google Code and other places, but these should be considered obsolete.
 
-
-==Requirements==
-
-==Libraries==
-
-==Features==
-
-*[#1280] Add PAM support to PHP
-
-==Bug Fixes==
+Please review release notes in sub projects for details
