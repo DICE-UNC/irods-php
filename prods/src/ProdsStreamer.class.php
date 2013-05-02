@@ -141,6 +141,26 @@ class ProdsStreamer
 	}
 
 	/**
+	 * rmdir() handler
+	 *
+	 * @param $url
+	 * @return bool
+	 */
+	function rmdir ($url) {
+		try {
+			$file=ProdsDir::fromURI($url);
+			$conn = RODSConnManager::getConn($file->account);
+			$conn->rmdir($file->path_str);
+
+			RODSConnManager::releaseConn($conn);
+			return true;
+		} catch (Exception $e) {
+			trigger_error("Got an exception:$e", E_USER_WARNING);
+			return false;
+		}
+	}
+
+	/**
 	 * unlink() handler.
 	 *
 	 * @access private
@@ -203,31 +223,6 @@ class ProdsStreamer
 		  return false;
 		}
 	}
-
-
-    /**
-     * Name of the file specified in the URI to fopen().
-     *
-     * @access private
-     */
-    private $file;
-
-
-    /**
-     * opendir() handler.
-     *
-     * @access private
-     */
-    public function dir_opendir($path, $options)
-    {
-        try {
-            $this->dir = ProdsDir::fromURI($path, true);
-            return true;
-        } catch (Exception $e) {
-            trigger_error("Got an exception:$e", E_USER_WARNING);
-            return false;
-        }
-    }
 
     /**
      * readdir() handler.
@@ -402,53 +397,6 @@ class ProdsStreamer
         } catch (Exception $e) {
             trigger_error("Got an exception:$e", E_USER_WARNING);
             return true;
-        }
-    }
-
-    /**
-     * fstat() handler.
-     *
-     * @access private
-     */
-    function stream_stat()
-    {
-
-        try {
-            $stats = $this->file->getStats();
-            return array(
-                -1, -1, -1, -1, -1, -1, $stats->size, time(), $stats->mtime, $stats->ctime, -1, -1,
-                'dev' => -1,
-                'ino' => -1,
-                'mode' => -1,
-                'nlink' => -1,
-                'uid' => -1,
-                'gid' => -1,
-                'rdev' => -1,
-                'size' => $stats->size,
-                'atime' => time(),
-                'mtime' => $stats->mtime,
-                'ctime' => $stats->ctime,
-                'blksize' => -1,
-                'blocks' => -1,
-            );
-        } catch (Exception $e) {
-            trigger_error("Got an exception:$e", E_USER_WARNING);
-            return array(
-                -1, -1, -1, -1, -1, -1, -1, time(), time(), time(), -1, -1,
-                'dev' => -1,
-                'ino' => -1,
-                'mode' => -1,
-                'nlink' => -1,
-                'uid' => -1,
-                'gid' => -1,
-                'rdev' => -1,
-                'size' => -1,
-                'atime' => time(),
-                'mtime' => time(),
-                'ctime' => time(),
-                'blksize' => -1,
-                'blocks' => -1,
-            );
         }
     }
 

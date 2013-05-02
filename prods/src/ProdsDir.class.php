@@ -106,7 +106,7 @@ class ProdsDir extends ProdsPath
                             $rel_cb=array('RODSConnManager', 'releaseConn'))
   {
     //$conn = RODSConnManager::getConn($this->account);
-    $conn = call_user_func($get_cb, &$this->account);
+    $conn = call_user_func_array($get_cb, array(&$this->account));
     $this->path_exists= $conn -> dirExists ($this->path_str);
     //RODSConnManager::releaseConn($conn);
     call_user_func($rel_cb, $conn);
