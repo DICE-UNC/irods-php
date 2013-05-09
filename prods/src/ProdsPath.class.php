@@ -44,6 +44,8 @@ abstract class ProdsPath
         while ((strlen($path_str) > 1) && ($path_str{strlen($path_str) - 1} == '/')) {
             $path_str = substr($path_str, 0, strlen($path_str) - 1);
         }
+        // remove duplicate '/' characters
+        $path_str = str_replace('//', '/', $path_str);
         $this->path_str = $path_str;
         if ($path_str == '/') {
             $this->parent_path = null;
