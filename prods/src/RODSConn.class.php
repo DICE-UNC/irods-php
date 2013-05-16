@@ -14,6 +14,7 @@ require_once("RodsConst.inc.php");
 if (!defined("O_RDONLY")) define ("O_RDONLY", 0);
 if (!defined("O_WRONLY")) define ("O_WRONLY", 1);
 if (!defined("O_RDWR")) define ("O_RDWR", 2);
+if (!defined("O_TRUNC")) define ("O_TRUNC", 512);
 
 class RODSConn
 {
@@ -935,11 +936,11 @@ class RODSConn
                 $open_flag = O_RDWR;
                 break;
             case 'w':
-                $open_flag = O_WRONLY;
+                $open_flag = O_WRONLY|O_TRUNC;
                 $create_if_not_exists = true;
                 break;
             case 'w+':
-                $open_flag = O_RDWR;
+                $open_flag = O_RDWR|O_TRUNC;
                 $create_if_not_exists = true;
                 break;
             case 'a':
