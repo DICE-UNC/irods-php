@@ -1593,6 +1593,21 @@ class RODSConn
             (($results->getNumRow() < $limit) || ($limit < 0)));
     
 
+        // Make sure and close the query if there are any results left.
+    if ($continueInx > 0) 
+    {
+      $msg->getBody()->continueInx=$continueInx;
+      $msg->getBody()->maxRows=-1;  // tells the server to close the query
+      fwrite($this->conn, $msg->pack());
+      $msg_resv=new RODSMessage();
+      $intInfo=$msg_resv->unpack($this->conn);
+      if ($intInfo<0)
+      {
+        throw new RODSException("RODSConn::query has got an error from the server",
+          $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+      }
+    }
+        
         return $results;
     }
 }
