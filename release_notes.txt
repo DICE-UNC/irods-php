@@ -1,7 +1,7 @@
 *'''Project''': iRODS PHP Library PRODS and PRODS Web Browser
-*'''Date''': 
-*'''Release Version''': 3.2.1-alpha1
-*'''git tag''':  php-3.2.1-alpha1
+*'''Date''': 06/04/2013
+*'''Release Version''': 3.3.0-beta1
+*'''git tag''':  3.3.0-beta1
 
 ==News==
 
