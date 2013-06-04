@@ -14,6 +14,7 @@ require_once("RodsConst.inc.php");
 if (!defined("O_RDONLY")) define ("O_RDONLY", 0);
 if (!defined("O_WRONLY")) define ("O_WRONLY", 1);
 if (!defined("O_RDWR")) define ("O_RDWR", 2);
+if (!defined("O_TRUNC")) define ("O_TRUNC", 512);
 
 class RODSConn
 {
@@ -935,11 +936,11 @@ class RODSConn
                 $open_flag = O_RDWR;
                 break;
             case 'w':
-                $open_flag = O_WRONLY;
+                $open_flag = O_WRONLY|O_TRUNC;
                 $create_if_not_exists = true;
                 break;
             case 'w+':
-                $open_flag = O_RDWR;
+                $open_flag = O_RDWR|O_TRUNC;
                 $create_if_not_exists = true;
                 break;
             case 'a':
@@ -1513,6 +1514,21 @@ class RODSConn
                     array_merge($result_arr["$attri_name"], $sql_res_pk->value);
             }
         }
+        
+         // Make sure and close the query if there are any results left.
+    if ($genque_result_pk->continueInx > 0) 
+    {
+      $msg->getBody()->continueInx=$genque_result_pk->continueInx;
+      $msg->getBody()->maxRows=-1;  // tells the server to close the query
+      fwrite($this->conn, $msg->pack());
+      $msg_resv=new RODSMessage();
+      $intInfo=$msg_resv->unpack($this->conn);
+      if ($intInfo<0)
+      {
+        throw new RODSException("RODSConn::genQuery has got an error from the server",
+          $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+      }
+    }
 
         return $result_arr;
     }
@@ -1577,6 +1593,21 @@ class RODSConn
             (($results->getNumRow() < $limit) || ($limit < 0)));
     
 
+        // Make sure and close the query if there are any results left.
+    if ($continueInx > 0) 
+    {
+      $msg->getBody()->continueInx=$continueInx;
+      $msg->getBody()->maxRows=-1;  // tells the server to close the query
+      fwrite($this->conn, $msg->pack());
+      $msg_resv=new RODSMessage();
+      $intInfo=$msg_resv->unpack($this->conn);
+      if ($intInfo<0)
+      {
+        throw new RODSException("RODSConn::query has got an error from the server",
+          $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+      }
+    }
+        
         return $results;
     }
 }
