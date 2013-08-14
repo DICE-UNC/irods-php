@@ -32,13 +32,24 @@ class RODSAccountTest extends PHPUnit_Framework_TestCase {
     protected $comment = "foo";
     protected $info = "bar";
     protected $dn = "";
+    protected $resc = "demo";
+    protected $auth_type = "irods";
+    protected $ticket = "myticket";
 
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $this->rodsAcct = new RODSAccount($this->host, $this->port, $this->name, $this->passwd, $this->zone);
+        $this->rodsAcct = new RODSAccount(
+                $this->host,
+                $this->port,
+                $this->name,
+                $this->passwd,
+                $this->zone,
+                $this->resc,
+                $this->auth_type,
+                $this->ticket);
     }
 
     /**
@@ -84,7 +95,7 @@ class RODSAccountTest extends PHPUnit_Framework_TestCase {
     public function testGetSignature() {
         
         // test_ret value should be 'd84456497b1b340d8f4f751d36fd2d8d'
-        $expected_ret = bin2hex(md5("$this->name.$this->zone:this->pass@$this->host:$this->port", TRUE ));
+        $expected_ret = bin2hex(md5("$this->name.$this->zone:this->pass@$this->host:$this->port.$this->ticket", TRUE));
         $actual_ret = $this->rodsAcct->getSignature();
         //$this->assertEquals($expected_ret, $actual_ret, TRUE);
         $this->assertEquals($expected_ret, $actual_ret);
