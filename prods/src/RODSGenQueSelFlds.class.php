@@ -35,7 +35,6 @@ class RODSGenQueSelFlds
             $this->indexes[] = $GLOBALS['PRODS_GENQUE_NUMS']["$name"];
             $this->attrs[] = RODSGenQueSelFlds::attr2GenQueNumber($attrs[$i]);
         }
-
     }
 
     /**
@@ -156,5 +155,3 @@ class RODSGenQueSelFlds
     }
 
 }
-
-?>
