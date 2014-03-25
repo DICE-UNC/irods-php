@@ -23,19 +23,23 @@ class RODSGenQueSelFlds
         require_once("RodsGenQueryNum.inc.php"); //load magic numbers
 
         $this->names = $names;
-        $this->attrs = array();
+        $this->attrs = array_fill(0, count($names), null);
         $this->indexes = array();
 
         for ($i = 0; $i < count($names); $i++) {
             $name = $names[$i];
             if (!isset($GLOBALS['PRODS_GENQUE_NUMS']["$name"])) {
-                throw new RODSException("General Query select field name '$name' is not valid",
-                    'PERR_USER_INPUT_ERROR');
+                throw new RODSException("General Query select field name '$name' is not valid", 'PERR_USER_INPUT_ERROR');
             }
             $this->indexes[] = $GLOBALS['PRODS_GENQUE_NUMS']["$name"];
-            $this->attrs[] = RODSGenQueSelFlds::attr2GenQueNumber($attrs[$i]);
+            if (isset($this->attrs, $i)) {
+                $this->attrs[$i] = RODSGenQueSelFlds::attr2GenQueNumber($this->attrs[$i]);
+            } else {
+                $this->attrs[$i] = 1;
+            }
         }
     }
+
 
     /**
      * Add a single select field.
