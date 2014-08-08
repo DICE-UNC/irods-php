@@ -39,11 +39,11 @@ class ProdsDirTest extends PHPUnit_Framework_TestCase {
 
     // values for initialization of RODSAccount
     protected $id = "1";
-    protected $user = "me";
-    protected $zone = "myZone";
-    protected $host = "myirods.myhost.mycom";
-    protected $port = "1111";
-    protected $passwd = "meme";
+    protected $user = "test1";
+    protected $zone = "test1";
+    protected $host = "localhost";
+    protected $port = "1247";
+    protected $passwd = "test";
     protected $type = "rodsuser";
     protected $ctime = "01298479459";
     protected $mtime = "01298479459";
