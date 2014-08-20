@@ -1,10 +1,19 @@
 #irods-php
 =========
 
-##PHP API for iRODS
+## PHP API for iRODS
 
-###NOTE: this is currently transitional, and at release time will represent the next canonical release of PHP.
+### Version: 4.0.3-SNAPSHOT
+### Release: TBD
+### Git Tag: TBD
 
-We're moving to gitHub off of [GForge] (https://code.renci.org/gf/project/irodsphp/).  For previous releases, GForge is still canonical, but from this piont forward, GitHub will contain the most current snapshot activity and shold be used going forward.
+### This is the canonical iRODS PHP API and deprecates the PHP API that was hosted on code.renci.org
 
-Community contribution of PHP code is most welcome.  Drop us an issue or pull request if you want to pitch in.
+PHP Core API and PRODS Web Browser for iRODS.
+
+## Features and Bug Fixes
+
+#### mkdir fails on iRODS 4.0 #6
+
+Updated to use the new CollInpNew_PI API number 681
+
