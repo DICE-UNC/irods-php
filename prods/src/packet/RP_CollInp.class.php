@@ -9,9 +9,9 @@ class RP_CollInp extends RODSPacket
     {
         if (!isset($KeyValPair_PI)) $KeyValPair_PI = new RP_KeyValPair();
 
-        $packlets = array("collName" => $collName,
+        $packlets = array("collName" => $collName, "flags" => "0", "oprType"=>"0",
             'KeyValPair_PI' => $KeyValPair_PI);
-        parent::__construct("CollInp_PI", $packlets);
+        parent::__construct("CollInpNew_PI", $packlets);
     }
 
 }
