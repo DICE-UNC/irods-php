@@ -105,8 +105,6 @@ class ProdsDirTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($this->prodsDir, $prods_dir_stub->fromURI($uri));
 
-
-
     }
 
     public function testVerify() {
