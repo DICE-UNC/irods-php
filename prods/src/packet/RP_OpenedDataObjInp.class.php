@@ -13,25 +13,25 @@ class RP_OpenedDataObjInp extends RODSPacket {
     public function __construct($fd = -1,  $length = 0, $offset = 0, $whence = self::SEEK_START, $oprType = 0, $KeyValPair_PI = null) {
   
         if ($fd == -1) {
-            throw new IllegalArgumentException("fd must be > -1");
+            throw new InvalidArgumentException("fd must be > -1");
         }
 
         if ($offset < 0) {
-            throw new IllegalArgumentException("offset must be non negative");
+            throw new InvalidArgumentException("offset must be non negative");
         }
 
-        if ($length <= 0) {
-            throw new IllegalArgumentException("length must be greater than zero");
+        if ($length < 0) {
+            throw new InvalidArgumentException("length must be greater than or equal to  zero");
         }
 
         if ($oprType < 0) {
-            throw new IllegalArgumentException("oprtType must be greater than zero");
+            throw new InvalidArgumentException("oprtType must be greater than zero");
         }
         
         if ($whence >= SEEK_START && $whence <= SEEK_END) {
             //ok
         } else {
-            throw new IllegalArgumentException("invalid whence value");
+            throw new InvalidArgumentException("invalid whence value");
         }
         if (!isset($KeyValPair_PI)) {
             $KeyValPair_PI = new RP_KeyValPair();
