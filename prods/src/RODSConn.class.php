@@ -981,8 +981,10 @@ class RODSConn {
      * @return the read string.
      */
     public function fileRead($l1desc, $length) {
-        $dataObjReadInp_pk = new RP_dataObjReadInp($l1desc, $length);
-        $msg = new RODSMessage("RODS_API_REQ_T", $dataObjReadInp_pk, $GLOBALS['PRODS_API_NUMS']['DATA_OBJ_READ_AN']);
+       
+        $openedDataObjInp = new RP_OpenedDataObjInp($l1desc, $length);
+        $msg = new RODSMessage("RODS_API_REQ_T", $openedDataObjInp, $GLOBALS['PRODS_API_NUMS']['OPENED_DATA_OBJ_READ_AN'], $string);
+
         fwrite($this->conn, $msg->pack()); // send it
         $msg = new RODSMessage();
         $intInfo = (int) $msg->unpack($this->conn);
@@ -1028,8 +1030,13 @@ class RODSConn {
      * @return int the current offset
      */
     public function fileSeek($l1desc, $offset, $whence = SEEK_SET) {
-        $dataObjReadInp_pk = new RP_fileLseekInp($l1desc, $offset, $whence);
-        $msg = new RODSMessage("RODS_API_REQ_T", $dataObjReadInp_pk, $GLOBALS['PRODS_API_NUMS']['DATA_OBJ_LSEEK_AN']);
+      //  $dataObjReadInp_pk = new RP_fileLseekInp($l1desc, $offset, $whence);
+       // $msg = new RODSMessage("RODS_API_REQ_T", $dataObjReadInp_pk, $GLOBALS['PRODS_API_NUMS']['DATA_OBJ_LSEEK_AN']);
+        
+        
+        $openedDataObjInp = new RP_OpenedDataObjInp($l1desc, 0, $offset, $whence);
+        $msg = new RODSMessage("RODS_API_REQ_T", $openedDataObjInp, $GLOBALS['PRODS_API_NUMS']['OPENED_DATA_OBJ_SEEK_AN'], $string);
+
         fwrite($this->conn, $msg->pack()); // send it
         $msg = new RODSMessage();
         $intInfo = (int) $msg->unpack($this->conn);
