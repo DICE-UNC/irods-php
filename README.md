@@ -17,3 +17,7 @@ PHP Core API and PRODS Web Browser for iRODS.
 
 Updated to use the new CollInpNew_PI API number 681
 
+
+#### ProdsFile->write fails on iRODS 4.0 #9
+
+Updated packing instructions for File read(), seek(), open(), close(), write() to use OpenedDataObjInp, replacing deprecated API
