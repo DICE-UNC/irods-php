@@ -958,8 +958,9 @@ class RODSConn {
      */
     public function closeFileDesc($l1desc) {
         try {
-            $dataObjCloseInp_pk = new RP_dataObjCloseInp($l1desc);
-            $msg = new RODSMessage("RODS_API_REQ_T", $dataObjCloseInp_pk, $GLOBALS['PRODS_API_NUMS']['DATA_OBJ_CLOSE_AN']);
+
+            $openedDataObjInp = new RP_OpenedDataObjInp($l1desc);
+            $msg = new RODSMessage("RODS_API_REQ_T", $openedDataObjInp, $GLOBALS['PRODS_API_NUMS']['OPENED_DATA_OBJ_CLOSE_AN']);
             fwrite($this->conn, $msg->pack()); // send it
             // get value back
             $msg = new RODSMessage();
