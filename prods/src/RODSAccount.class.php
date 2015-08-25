@@ -23,10 +23,11 @@ class RODSAccount
   public $default_resc;
   public $auth_type;
   public $ticket;
+  public $proxy_user;
   /**#@-*/
   
   public function __construct($host, $port, $user, $pass, $zone="", 
-    $default_resc="", $auth_type="irods",$ticket = '')
+    $default_resc="", $auth_type="irods",$ticket = '', $proxy_user = '')
   {
     $this->host=$host;
     $this->port=$port;
@@ -35,7 +36,14 @@ class RODSAccount
     $this->zone=$zone;
     $this->default_resc=$default_resc;
     $this->auth_type=$auth_type;
-     $this->ticket = $ticket;
+    $this->ticket = $ticket;
+
+    // Only set a proxy user when one is requested, otherwise the proxy user and user are the same
+    if ( $proxy_user == '' ) {
+        $this->proxy_user = $user;
+    } else {
+        $this->proxy_user = $proxy_user;
+    }
   }
   
  /**
