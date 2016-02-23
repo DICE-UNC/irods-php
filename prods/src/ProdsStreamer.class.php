@@ -246,8 +246,7 @@ class ProdsStreamer
 	 *
 	 * @access private
 	 */
-	public function stream_read ($count = 10000000) {
-		$count  = 10000000;
+	public function stream_read ($count) {
 		if (in_array ($this->file->getOpenMode(), array ('w', 'a', 'x'))) {
 			return false;
 		}
