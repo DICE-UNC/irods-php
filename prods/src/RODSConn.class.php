@@ -28,12 +28,12 @@ class RODSConn {
     public $connected;
 
     /**
-     * Makes a new connection to RODS server, with supplied user information (name, passwd etc.) 
-     * @param string $host hostname 
-     * @param string $port port number 
-     * @param string $user username 
-     * @param string $pass passwd 
-     * @param string $zone zonename 
+     * Makes a new connection to RODS server, with supplied user information (name, passwd etc.)
+     * @param string $host hostname
+     * @param string $port port number
+     * @param string $user username
+     * @param string $pass passwd
+     * @param string $zone zonename
      */
     public function __construct(RODSAccount &$account) {
         $this->account = $account;
@@ -83,6 +83,7 @@ class RODSConn {
         $host = $this->account->host;
         $port = $this->account->port;
         $user = $this->account->user;
+        $proxy_user = $this->account->proxy_user;
         $pass = $this->account->pass;
         $zone = $this->account->zone;
         $auth_type = $this->account->auth_type;
@@ -121,13 +122,13 @@ class RODSConn {
         $this->conn = $conn;
 
         // connect to RODS server
-        $msg = RODSMessage::packConnectMsg($user, $zone);
+        $msg = RODSMessage::packConnectMsg($user, $proxy_user, $zone);
         fwrite($conn, $msg);
 
         $msg = new RODSMessage();
         $intInfo = $msg->unpack($conn);
         if ($intInfo < 0) {
-            throw new RODSException("Connection to '$host:$port' failed.2. User: $user Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+            throw new RODSException("Connection to '$host:$port' failed.2. User: $proxy_user Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
         }
 
         // are we doing PAM authentication
@@ -139,7 +140,7 @@ class RODSConn {
             $msg = new RODSMessage();
             $intInfo = $msg->unpack($conn);
             if ($intInfo < 0) {
-                throw new RODSException("Connection to '$host:$port' failed.ssl1. User: $user Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+                throw new RODSException("Connection to '$host:$port' failed.ssl1. User: $proxy_user Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
             }
             // Turn on SSL on our side
             if (!stream_socket_enable_crypto($conn, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
@@ -147,13 +148,13 @@ class RODSConn {
             }
 
             // all good ... do the PAM authentication over the encrypted connection
-            $req_packet = new RP_pamAuthRequestInp($user, $pass, -1);
+            $req_packet = new RP_pamAuthRequestInp($proxy_user, $pass, -1);
             $msg = new RODSMessage("RODS_API_REQ_T", $req_packet, $GLOBALS['PRODS_API_NUMS']['PAM_AUTH_REQUEST_AN']);
             fwrite($conn, $msg->pack());
             $msg = new RODSMessage();
             $intInfo = $msg->unpack($conn);
             if ($intInfo < 0) {
-                throw new RODSException("PAM auth failed at server '$host:$port' User: $user Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+                throw new RODSException("PAM auth failed at server '$host:$port' User: $proxy_user Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
             }
 
             // Update the account object with the temporary password
@@ -168,7 +169,7 @@ class RODSConn {
             $msg = new RODSMessage();
             $intInfo = $msg->unpack($conn);
             if ($intInfo < 0) {
-                throw new RODSException("Connection to '$host:$port' failed.ssl2. User: $user Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+                throw new RODSException("Connection to '$host:$port' failed.ssl2. User: $proxy_user Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
             }
             // De-activate SSL on the connection
             stream_socket_enable_crypto($conn, false);
@@ -193,7 +194,7 @@ class RODSConn {
         $msg = new RODSMessage();
         $intInfo = $msg->unpack($conn);
         if ($intInfo < 0) {
-            throw new RODSException("Connection to '$host:$port' failed.3. User: $user Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+            throw new RODSException("Connection to '$host:$port' failed.3. User: $proxy_user Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
         }
         $pack = $msg->getBody();
         $challenge_b64encoded = $pack->challenge;
@@ -210,7 +211,7 @@ class RODSConn {
         $response = base64_encode($pwmd5);
 
         // set response
-        $resp_packet = new RP_authResponseInp($response, $user);
+        $resp_packet = new RP_authResponseInp($response, $proxy_user);
         $msg = new RODSMessage("RODS_API_REQ_T", $resp_packet, $GLOBALS['PRODS_API_NUMS']['AUTH_RESPONSE_AN']);
         fwrite($conn, $msg->pack());
 
@@ -220,7 +221,7 @@ class RODSConn {
         $intInfo = $msg->unpack($conn);
         if ($intInfo < 0) {
             $this->disconnect();
-            throw new RODSException("Connection to '$host:$port' failed.4 (login failed, possible wrong user/passwd). User: $user Pass: $pass Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
+            throw new RODSException("Connection to '$host:$port' failed.4 (login failed, possible wrong user/passwd). User: $proxy_user Pass: $pass Zone: $zone", $GLOBALS['PRODS_ERR_CODES_REV']["$intInfo"]);
         }
 
         $this->connected = true;
@@ -981,7 +982,7 @@ class RODSConn {
      * @return the read string.
      */
     public function fileRead($l1desc, $length) {
-       
+
         $openedDataObjInp = new RP_OpenedDataObjInp($l1desc, $length);
 	$string = '';
         $msg = new RODSMessage("RODS_API_REQ_T", $openedDataObjInp, $GLOBALS['PRODS_API_NUMS']['OPENED_DATA_OBJ_READ_AN'], $string);
@@ -1033,8 +1034,8 @@ class RODSConn {
     public function fileSeek($l1desc, $offset, $whence = SEEK_SET) {
       //  $dataObjReadInp_pk = new RP_fileLseekInp($l1desc, $offset, $whence);
        // $msg = new RODSMessage("RODS_API_REQ_T", $dataObjReadInp_pk, $GLOBALS['PRODS_API_NUMS']['DATA_OBJ_LSEEK_AN']);
-        
-        
+
+
         $openedDataObjInp = new RP_OpenedDataObjInp($l1desc, 0, $offset, $whence);
         $msg = new RODSMessage("RODS_API_REQ_T", $openedDataObjInp, $GLOBALS['PRODS_API_NUMS']['OPENED_DATA_OBJ_SEEK_AN'], $string);
 

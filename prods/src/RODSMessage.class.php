@@ -173,10 +173,10 @@ class RODSMessage
         return $this->header_xml . "\n" . $this->msg_xml;
     }
 
-    public static function packConnectMsg($user, $zone, $relVersion = RODS_REL_VERSION,
+    public static function packConnectMsg($user, $proxy_user, $zone, $relVersion = RODS_REL_VERSION,
                                           $apiVersion = RODS_API_VERSION, $option = NULL)
     {
-        $msgbody = new RP_StartupPack($user, $zone, $relVersion, $apiVersion . $option);
+        $msgbody = new RP_StartupPack($user, $proxy_user, $zone, $relVersion, $apiVersion . $option);
         $rods_msg = new RODSMessage("RODS_CONNECT_T", $msgbody);
         return $rods_msg->pack();
     }
