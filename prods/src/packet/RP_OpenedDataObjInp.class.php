@@ -28,7 +28,7 @@ class RP_OpenedDataObjInp extends RODSPacket {
             throw new InvalidArgumentException("oprtType must be greater than zero");
         }
         
-        if ($whence >= SEEK_START && $whence <= SEEK_END) {
+        if ($whence >= self::SEEK_START && $whence <= self::SEEK_END) {
             //ok
         } else {
             throw new InvalidArgumentException("invalid whence value");
