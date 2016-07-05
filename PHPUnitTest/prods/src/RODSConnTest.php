@@ -1,7 +1,12 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../prods/src/RODSConn.class.php';
-require_once dirname(__FILE__) . 'IniParser.php';
+require_once dirname(__FILE__) . '/IniParser.php';
+require_once(dirname(__FILE__) . '/../../../prods/src/RODSConn.class.php');
+require_once(dirname(__FILE__) . '/../../../prods/src/RODSMessage.class.php');
+require_once(dirname(__FILE__) . '/../../../prods/src/RodsConst.inc.php');
+require_once(dirname(__FILE__) . '/../../../prods/src/ProdsConfig.inc.php');
+require_once(dirname(__FILE__) . '/../../../prods/src/packet/RP_StartupPack.class.php');
+
 
 /**
  * Test class for RODSConn.
@@ -9,18 +14,21 @@ require_once dirname(__FILE__) . 'IniParser.php';
  */
 class RODSConnTest extends PHPUnit_Framework_TestCase {
 
+    protected $iniParser;
+
     /**
      * @var RODSConn
      */
     protected $object;
-    protected $iniParser;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp() {
+
         $this->iniParser = new IniParser();
+
     }
 
     /**
@@ -29,296 +37,6 @@ class RODSConnTest extends PHPUnit_Framework_TestCase {
      */
     protected function tearDown() {
 
-    }
-
-    /**
-     * @todo Implement test__destruct().
-     */
-    public function test__destruct() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testEquals().
-     */
-    public function testEquals() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetSignature().
-     */
-    public function testGetSignature() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testLock().
-     */
-    public function testLock() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testUnlock().
-     */
-    public function testUnlock() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testIsIdle().
-     */
-    public function testIsIdle() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetId().
-     */
-    public function testGetId() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testSetId().
-     */
-    public function testSetId() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetAccount().
-     */
-    public function testGetAccount() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testConnect().
-     */
-    public function testConnect() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testDisconnect().
-     */
-    public function testDisconnect() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetTempPassword().
-     */
-    public function testGetTempPassword() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetKeyForTempPassword().
-     */
-    public function testGetKeyForTempPassword() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetUserInfo().
-     */
-    public function testGetUserInfo() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testMkdir().
-     */
-    public function testMkdir() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testRmdir().
-     */
-    public function testRmdir() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetChildDir().
-     */
-    public function testGetChildDir() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetChildDirWithStats().
-     */
-    public function testGetChildDirWithStats() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetChildFile().
-     */
-    public function testGetChildFile() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetChildFileWithStats().
-     */
-    public function testGetChildFileWithStats() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetDirStats().
-     */
-    public function testGetDirStats() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetFileStats().
-     */
-    public function testGetFileStats() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testDirExists().
-     */
-    public function testDirExists() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testFileExists().
-     */
-    public function testFileExists() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testRepl().
-     */
-    public function testRepl() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testRename().
-     */
-    public function testRename() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testOpenFileDesc().
-     */
-    public function testOpenFileDesc() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testFileUnlink().
-     */
-    public function testFileUnlink() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testCloseFileDesc().
-     */
-    public function testCloseFileDesc() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
     }
 
     /**
