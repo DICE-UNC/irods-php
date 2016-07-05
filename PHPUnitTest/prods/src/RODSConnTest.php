@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__FILE__) . '/../../../prods/src/RODSConn.class.php';
+require_once dirname(__FILE__) . 'IniParser.php';
 
 /**
  * Test class for RODSConn.
@@ -12,12 +13,14 @@ class RODSConnTest extends PHPUnit_Framework_TestCase {
      * @var RODSConn
      */
     protected $object;
+    protected $iniParser;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp() {
+        $this->iniParser = new IniParser();
     }
 
     /**
