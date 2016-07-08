@@ -468,10 +468,10 @@ class ProdsDir extends ProdsPath
                     $meta_array = $term_val;
                     foreach ($meta_array as $meta) {
                         if (isset($meta->name)) {
-                            if ($meta->nameop === 'like') {
+                            if ($meta->op === 'like') {
                                 $condition->add('COL_META_DATA_ATTR_NAME', 'like', '%' . $meta->name . '%');
-                            } else if (isset($meta->nameop)) {
-                                $condition->add('COL_META_DATA_ATTR_NAME', $meta->nameop, $meta->name);
+                            } else if (isset($meta->op)) {
+                                $condition->add('COL_META_DATA_ATTR_NAME', $meta->op, $meta->name);
                             } else {
                                 $condition->add('COL_META_DATA_ATTR_NAME', '=', $meta->name);
                             }
@@ -486,10 +486,10 @@ class ProdsDir extends ProdsPath
                             }
                         }
                         if (isset($meta->unit)) {
-                            if ($meta->unitop === 'like') {
+                            if ($meta->op === 'like') {
                                 $condition->add('COL_META_DATA_ATTR_UNIT', 'like', '%' . $meta->unit . '%');
-                            } else if (isset($meta->unitop)) {
-                                $condition->add('COL_META_DATA_ATTR_UNIT', $meta->unitop, $meta->unit);
+                            } else if (isset($meta->op)) {
+                                $condition->add('COL_META_DATA_ATTR_UNIT', $meta->op, $meta->unit);
                             } else {
                                 $condition->add('COL_META_DATA_ATTR_UNIT', '=', $meta->unit);
                             }

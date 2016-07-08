@@ -1,7 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../prods/src/RODSAccount.class.php';
-
+require_once("autoload.inc.php");
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,11 +11,8 @@ require_once dirname(__FILE__) . '/../../../prods/src/RODSAccount.class.php';
 class IniParser
 {
 
-
-
     public $defaultIni = "/etc/irods-ext/phptest.ini";
     public $ini_array;
-
 
     /**
      * IniParser constructor.
@@ -25,7 +21,6 @@ class IniParser
     {
         $this->getIniData();
     }
-
 
     /**
      * return a properties array based on the expected /etc/irods-ext/phptest.ini file
@@ -44,7 +39,7 @@ class IniParser
     {
 
         $rodsAccount = new RODSAccount($this->ini_array["host"], $this->ini_array["port"], $this->ini_array["user1"],
-            $this->ini_array["user1"], $this->ini_array["zone"], $this->ini_array["def-resc"]);
+            $this->ini_array["password1"], $this->ini_array["zone"], $this->ini_array["def-resc"]);
         print_r($rodsAccount);
         return $rodsAccount;
 

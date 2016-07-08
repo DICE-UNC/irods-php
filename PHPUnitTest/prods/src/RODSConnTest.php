@@ -1,11 +1,5 @@
 <?php
-
-require_once dirname(__FILE__) . '/IniParser.php';
-require_once(dirname(__FILE__) . '/../../../prods/src/RODSConn.class.php');
-require_once(dirname(__FILE__) . '/../../../prods/src/RODSMessage.class.php');
-require_once(dirname(__FILE__) . '/../../../prods/src/RodsConst.inc.php');
-require_once(dirname(__FILE__) . '/../../../prods/src/ProdsConfig.inc.php');
-require_once(dirname(__FILE__) . '/../../../prods/src/packet/RP_StartupPack.class.php');
+require_once(dirname(__FILE__) . '/../../../prods/src/autoload.inc.php');
 
 
 /**
@@ -42,111 +36,15 @@ class RODSConnTest extends PHPUnit_Framework_TestCase {
     /**
      * @todo Implement testFileRead().
      */
-    public function testFileRead() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
+    public function testConnect() {
+        print_r("testConnect");
 
-    /**
-     * @todo Implement testFileWrite().
-     */
-    public function testFileWrite() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testFileSeek().
-     */
-    public function testFileSeek() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetMeta().
-     */
-    public function testGetMeta() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testAddMeta().
-     */
-    public function testAddMeta() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testRmMeta().
-     */
-    public function testRmMeta() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testRmMetaByID().
-     */
-    public function testRmMetaByID() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testCpMeta().
-     */
-    public function testCpMeta() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testExecUserRule().
-     */
-    public function testExecUserRule() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGenQuery().
-     */
-    public function testGenQuery() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testQuery().
-     */
-    public function testQuery() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $account = $this->iniParser->buildRodsAccountForTest1User();
+        $rodsConn = new RODSConn($account);
+        $this->assertNotNull($rodsConn);
+        print_r("connecting...");
+        $rodsConn->connect();
+        //$this->assertFalse($rodsConn->connected);
     }
 
 }
